@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackagesNuget", "Nuget\Pack
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageManager", "PackageManager\PackageManager.csproj", "{FFE9979E-F1F6-439D-A60D-2CD1826A0202}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackagesNpm", "PackagesNpm\PackagesNpm.csproj", "{7E7BD2CB-493F-45DA-B23D-C8D79CB60F5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{FFE9979E-F1F6-439D-A60D-2CD1826A0202}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFE9979E-F1F6-439D-A60D-2CD1826A0202}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFE9979E-F1F6-439D-A60D-2CD1826A0202}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E7BD2CB-493F-45DA-B23D-C8D79CB60F5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E7BD2CB-493F-45DA-B23D-C8D79CB60F5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E7BD2CB-493F-45DA-B23D-C8D79CB60F5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E7BD2CB-493F-45DA-B23D-C8D79CB60F5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

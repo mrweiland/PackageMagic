@@ -33,18 +33,18 @@
             // 
             // txtLog
             // 
-            this.txtLog.Location = new System.Drawing.Point(74, 42);
+            this.txtLog.Location = new System.Drawing.Point(12, 27);
             this.txtLog.Multiline = true;
             this.txtLog.Name = "txtLog";
             this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtLog.Size = new System.Drawing.Size(644, 348);
+            this.txtLog.Size = new System.Drawing.Size(501, 411);
             this.txtLog.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1308, 450);
             this.Controls.Add(this.txtLog);
             this.Name = "Form1";
             this.Text = "Form1";

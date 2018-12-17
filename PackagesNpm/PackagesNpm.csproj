@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FFE9979E-F1F6-439D-A60D-2CD1826A0202}</ProjectGuid>
+    <ProjectGuid>{7E7BD2CB-493F-45DA-B23D-C8D79CB60F5B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PackageMagic.PackageManager</RootNamespace>
-    <AssemblyName>PackageMagic.PackageManager</AssemblyName>
+    <RootNamespace>PackagesNpm</RootNamespace>
+    <AssemblyName>PackagesNpm</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,9 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="clsPackageManager.cs" />
-    <Compile Include="clsPackages.cs" />
+    <Compile Include="clsNpm.cs" />
+    <Compile Include="NpmPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PackageManager\PackageManager.csproj">
+      <Project>{ffe9979e-f1f6-439d-a60d-2cd1826a0202}</Project>
+      <Name>PackageManager</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

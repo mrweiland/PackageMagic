@@ -14,7 +14,7 @@ namespace PackageMagic.PackageManager
         string Description { get; set; }
         string Origin { get; set; }
     }
-
+    
     //public enum Origin
     //{
     //    Npm,
