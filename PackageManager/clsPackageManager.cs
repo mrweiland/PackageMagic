@@ -8,7 +8,7 @@ namespace PackageMagic.PackageManager
 {
     public interface IPackageMagic
     {
-        string Id { get; set; }
+        //string Id { get; set; }
         string Name { get; set; }
         string Version { get; set; }
         string Description { get; set; }

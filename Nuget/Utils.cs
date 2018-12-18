@@ -15,27 +15,27 @@ namespace PackageMagic.Nuget
     {
         public static bool ExtendedLogging { get; private set; }
 
-        public static void LogMessages(string message, bool extendedLogging = false)
-        {
-            ExtendedLogging = false;
-            if (ExtendedLogging)
-            {
-                if (extendedLogging)
-                {
-                    Console.WriteLine("**********Extended logging**********");
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine(message);
+        //public static void LogMessages(string message, bool extendedLogging = false)
+        //{
+        //    ExtendedLogging = false;
+        //    if (ExtendedLogging)
+        //    {
+        //        if (extendedLogging)
+        //        {
+        //            Console.WriteLine("**********Extended logging**********");
+        //            Console.ForegroundColor = ConsoleColor.Yellow;
+        //            Console.WriteLine(message);
                     
-                    Console.WriteLine("**********End Extended logging**********");
+        //            Console.WriteLine("**********End Extended logging**********");
                     
-                    return;
-                }
-            }
-            if (extendedLogging == false)
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine(message);
-            }
-        }
+        //            return;
+        //        }
+        //    }
+        //    if (extendedLogging == false)
+        //    {
+        //        Console.ForegroundColor = ConsoleColor.White;
+        //        Console.WriteLine(message);
+        //    }
+        //}
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
         public class NugetPackage: IPackageMagic
         {
-            public string Id { get; set; }
+            //public string Id { get; set; }
             public string Name { get; set; }
             public string Origin { get; set; }
             public string Version { get; set; }
@@ -20,9 +20,9 @@ using System.Collections.Generic;
                 //PackageInformation = new List<NugetPackage>();
             }
 
-            public IPackage NugetPackageInformation { get; set; }
-            
-            public string Description { get; set; }
+        public IPackage NugetPackageInformation { get; set; }
+
+        public string Description { get; set; }
             
 
         }

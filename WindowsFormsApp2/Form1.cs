@@ -36,34 +36,34 @@ namespace WindowsFormsApp2
         }
         public  void DoLogPackage(IPackageMagic package)
         {
-            if (txtLog.InvokeRequired)
-            {
-                this.BeginInvoke(new Action<IPackageMagic>(DoLogPackage), new object[] { package.Name });
-            }
-            else
-            {
-                txtLog.AppendText(package + Environment.NewLine);
-            }
+            //if (txtLog.InvokeRequired)
+            //{
+            //    this.BeginInvoke(new Action<IPackageMagic>(DoLogPackage), new object[] { package.Name });
+            //}
+            //else
+            //{
+            //    txtLog.AppendText(package + Environment.NewLine);
+            //}
             
         }
         private async Task Runner()
         {
             List<Task> t = new List<Task>();
-            var _projectDirectory = @"c:\git\Raycare";
+            var _projectDirectory = @"c:\git\";
             clsPackages.Callback += CallbackFromPackage;
             t.Add(clsNuget.SearchForPackagesConfig(_projectDirectory));
             t.Add(clsNuget.PopulatePackageReferences(_projectDirectory));
-            t.Add(clsNpm.LoopPackageJson(@"C:\git\RayCare\src\adapters\RayCare.Web.UI\package.json"));
+            t.Add(clsNpm.LoopPackageJson(@"C:\git\package.json"));
             await Task.WhenAll(t);
             clsPackages.Callback -= CallbackFromPackage;
         }
 
         private  void CallbackFromPackage(IPackageMagic package)
         {
-            if(package!=null && package is NugetPackage)
+            if(package!=null && package is IPackageMagic)
             {
-                Debug.WriteLine(((NugetPackage)package).Name);
-                //LogPackage(package);
+                //Debug.WriteLine(((NugetPackage)package).Name);
+                LogPackage(package);
 
             }
             else

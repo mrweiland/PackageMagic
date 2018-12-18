@@ -20,12 +20,15 @@ namespace PackageMagic.PackageManager
         {
             await Task.Run(() =>
             {
-
+                if(package.Name == "Thinktecture.IdentityModel.Owin.ClientCertificates")
+                {
+                    //
+                }
                 //Utils.LogMessages(package.Name);
                 IPackageMagic checkIfExist = clsPackages.PackageInformation.Find(z => z.Name == package.Name && z.Version == package.Version);
                 if (checkIfExist == null)
                 {
-                    //Utils.LogMessages($"Adding package: {package.Name}:{package.Version} - {package.Origin}");
+                   Utils.LogMessages($"Add: {package.Name}:{package.Version} - {package.Origin}");
                     PackageInformation.Add(package);
 
                     Callback?.Invoke(package);
