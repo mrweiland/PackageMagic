@@ -94,6 +94,10 @@
       <Project>{ffe9979e-f1f6-439d-a60d-2cd1826a0202}</Project>
       <Name>PackageManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PackagesNpm\PackagesNpm.csproj">
+      <Project>{7e7bd2cb-493f-45da-b23d-c8d79cb60f5b}</Project>
+      <Name>PackagesNpm</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

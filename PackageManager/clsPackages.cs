@@ -26,7 +26,7 @@ namespace PackageMagic.PackageManager
                 if (checkIfExist == null)
                 {
                     //Utils.LogMessages($"Adding package: {package.Name}:{package.Version} - {package.Origin}");
-                    clsPackages.PackageInformation.Add(package);
+                    PackageInformation.Add(package);
 
                     Callback?.Invoke(package);
                 }

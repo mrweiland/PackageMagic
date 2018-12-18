@@ -19,7 +19,7 @@ namespace PackagesNpm
             public static List<NpmPackage> PackageInformation;
             static NpmPackage()
             {
-                PackageInformation = new List<NpmPackage>();
+                //PackageInformation = new List<NpmPackage>();
             }
 
 

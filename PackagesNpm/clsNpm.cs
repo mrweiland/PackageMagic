@@ -17,7 +17,7 @@ namespace PackagesNpm
         {
             NpmPath = FindNpmPath("npm.cmd");
         }
-        public static string FindNpmPath(string npmCmd)
+        private static string FindNpmPath(string npmCmd)
         {
             npmCmd = Environment.ExpandEnvironmentVariables(npmCmd);
             if (!File.Exists(npmCmd))

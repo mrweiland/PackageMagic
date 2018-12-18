@@ -15,7 +15,7 @@ namespace PackageMagic.Nuget
 {
     public class clsNuget
     {
-        public static ChangedCallback Callback { get; set; }
+        //public static ChangedCallback Callback { get; set; }
 
         /// <summary>
         /// Loads the nuget feed provided. Loops all packages and adds them to PackageInformation List.
@@ -34,7 +34,7 @@ namespace PackageMagic.Nuget
                     var pack = repo.FindPackage(package1.Id);
 
                     //AddToPackageInformation(new NugetPackage { Name = pack.Id, Version = pack.Version.ToString(), Description = pack.Description, FeedRegistry = nugetFeedSourceV2, OriginOfPackage = NugetPackage.Origin.Nuget }).GetAwaiter().GetResult();
-                    AddToPackageInformation(new NugetPackage { Name = pack.Id, Version = pack.Version.ToString(), Description = pack.Description, Origin= "Nuget" }).GetAwaiter().GetResult();
+                    clsPackages.AddToPackageInformation(new NugetPackage { Name = pack.Id, Version = pack.Version.ToString(), Description = pack.Description, Origin = "Nuget" }).GetAwaiter().GetResult();
                 }
             });
         }
@@ -46,73 +46,59 @@ namespace PackageMagic.Nuget
         /// <returns></returns>
         public static async Task SearchCsProj(string file)
         {
+            await Task.Run(() =>
+           {
+               XmlDocument xDoc = new XmlDocument();
+                    //Utils.LogMessages($"CS Proj file {file}", true);
+                    using (var fs = new FileStream(file, FileMode.Open))
+               {
 
-            XmlDocument xDoc = new XmlDocument();
-            //Utils.LogMessages($"CS Proj file {file}", true);
-            using (var fs = new FileStream(file, FileMode.Open))
-            {
-                xDoc.Load(fs);
+                   xDoc.Load(fs);
 
-                // Load Xml
+                        // Load Xml
 
-                var nodes = xDoc.GetElementsByTagName("PackageReference");
+                        var nodes = xDoc.GetElementsByTagName("PackageReference");
 
-                foreach (XmlNode node in nodes)
-                {
-                    if (node.Attributes != null && node.Attributes.Count >1)
-                    {
-                        //NugetPackages p = new NugetPackages();
-                        //Console.WriteLine(node.Attributes["Include"].Value);
-                        try
-                        {
+                   foreach (XmlNode node in nodes)
+                   {
+                       if (node.Attributes != null && node.Attributes.Count > 1)
+                       {
+                                //NugetPackages p = new NugetPackages();
+                                //Console.WriteLine(node.Attributes["Include"].Value);
+                                try
+                           {
 
-                            string packageVersion;
-                            //p.PackageName = node.Attributes["Include"].Value;
-
-
-                            if (node.Attributes["Version"] == null)
-                            {
-                                //Console.WriteLine(node.Attributes["version"].Value);
-                                packageVersion = node.Attributes["version"].Value;
-                            }
-                            else
-                            {
-                                //Console.WriteLine(node.Attributes["Version"].Value);
-                                packageVersion = node.Attributes["Version"].Value;
-                            }
+                               string packageVersion;
+                                    //p.PackageName = node.Attributes["Include"].Value;
 
 
-                            await AddToPackageInformation(new NugetPackage { Name = node.Attributes["Include"].Value, Version = packageVersion, Description = "", Origin = "PackageReference" });
-                        }
-                        catch (Exception)
-                        {
-
-                            //throw;
-                        }
-                    }
-
-                }
-
-                //var nodes2 = xDoc.GetElementsByTagName("Reference");
-
-                //foreach (XmlNode node in nodes2)
-                //{
-                //    if (node.Attributes != null)
-                //    {
-
-                //        string[] version = node.Attributes["Include"].Value.Trim().Split(',');
-                //        if (version.Length > 2)
-                //        {
-                //            var foundVersion = version[1].Trim().Replace("Version=", "");
-                //            await Utils.AddToPackageInformation(new PackageInformation { PackageName = version[0], PackageVersion = foundVersion, PackageDescription = "", OriginOfPackage = PackageInformation.Origin.Reference });
-                //        }
-                //    }
-                //}
+                                    if (node.Attributes["Version"] == null)
+                               {
+                                        //Console.WriteLine(node.Attributes["version"].Value);
+                                        packageVersion = node.Attributes["version"].Value;
+                               }
+                               else
+                               {
+                                        //Console.WriteLine(node.Attributes["Version"].Value);
+                                        packageVersion = node.Attributes["Version"].Value;
+                               }
 
 
-            }
+                               clsPackages.AddToPackageInformation(new NugetPackage { Name = node.Attributes["Include"].Value, Version = packageVersion, Description = "", Origin = "PackageReference" }).GetAwaiter().GetResult();
+                           }
+                           catch (Exception)
+                           {
+
+                                    //throw;
+                                }
+                       }
 
 
+                   }
+
+               }
+
+           });
         }
 
         /// <summary>
@@ -174,7 +160,7 @@ namespace PackageMagic.Nuget
 
                         var package = new NugetPackage { Name = packageReference.Id, Version = packageReference.Version.ToNormalizedString(), Description = foundCsProjFile, Origin = "PackageConfig" };
 
-                        AddToPackageInformation(package).GetAwaiter().GetResult();
+                        clsPackages.AddToPackageInformation(package).GetAwaiter().GetResult();
                     }
                 }
             });
@@ -214,27 +200,27 @@ namespace PackageMagic.Nuget
 
         }
 
-        public static async Task AddToPackageInformation(NugetPackage package)
-        {
-            await Task.Run(() =>
-            {
-                
-                Utils.LogMessages(package.Name);
-                NugetPackage checkIfExist = NugetPackage.PackageInformation.Find(z => z.Name == package.Name && z.Version == package.Version);
-                if (checkIfExist == null)
-                {
-                    Utils.LogMessages($"Adding package: {package.Name}:{package.Version} - {package.Origin}");
-                    NugetPackage.PackageInformation.Add(package);
+        //public static async Task AddToPackageInformation(NugetPackage package)
+        //{
+        //    await Task.Run(() =>
+        //    {
 
-                    Callback?.Invoke(package);
-                }
-                else
-                {
-                    Utils.LogMessages("Exists: " + package.Name);
-                }
+        //        Utils.LogMessages(package.Name);
+        //        NugetPackage checkIfExist = NugetPackage.PackageInformation.Find(z => z.Name == package.Name && z.Version == package.Version);
+        //        if (checkIfExist == null)
+        //        {
+        //            Utils.LogMessages($"Adding package: {package.Name}:{package.Version} - {package.Origin}");
+        //            NugetPackage.PackageInformation.Add(package);
 
-            });
-        }
+        //            Callback?.Invoke(package);
+        //        }
+        //        else
+        //        {
+        //            Utils.LogMessages("Exists: " + package.Name);
+        //        }
+
+        //    });
+        //}
 
 
     }
