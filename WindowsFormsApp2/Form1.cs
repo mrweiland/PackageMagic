@@ -12,10 +12,11 @@ using PackageMagic.Nuget.interfaces;
 using NuGet;
 using PackageMagic.Nuget;
 using PackageMagic.PackageManager;
+using PackagesNpm;
 
 namespace WindowsFormsApp2
 {
-    public delegate void DoLog(string package);
+    public delegate void DoLog(IPackageMagic package);
 
     public partial class Form1 : Form
     {
@@ -33,11 +34,11 @@ namespace WindowsFormsApp2
             LogPackage += DoLogPackage;
 
         }
-        public  void DoLogPackage(string package)
+        public  void DoLogPackage(IPackageMagic package)
         {
             if (txtLog.InvokeRequired)
             {
-                this.BeginInvoke(new Action<string>(DoLogPackage), new object[] { package });
+                this.BeginInvoke(new Action<IPackageMagic>(DoLogPackage), new object[] { package.Name });
             }
             else
             {
@@ -48,12 +49,13 @@ namespace WindowsFormsApp2
         private async Task Runner()
         {
             List<Task> t = new List<Task>();
-            var _projectDirectory = @"c:\git\";
-            clsNuget.Callback += CallbackFromPackage;
+            var _projectDirectory = @"c:\git\Raycare";
+            clsPackages.Callback += CallbackFromPackage;
             t.Add(clsNuget.SearchForPackagesConfig(_projectDirectory));
             t.Add(clsNuget.PopulatePackageReferences(_projectDirectory));
+            t.Add(clsNpm.LoopPackageJson(@"C:\git\RayCare\src\adapters\RayCare.Web.UI\package.json"));
             await Task.WhenAll(t);
-            clsNuget.Callback -= CallbackFromPackage;
+            clsPackages.Callback -= CallbackFromPackage;
         }
 
         private  void CallbackFromPackage(IPackageMagic package)
@@ -61,7 +63,7 @@ namespace WindowsFormsApp2
             if(package!=null && package is NugetPackage)
             {
                 Debug.WriteLine(((NugetPackage)package).Name);
-                LogPackage(((NugetPackage)package).Name);
+                //LogPackage(package);
 
             }
             else

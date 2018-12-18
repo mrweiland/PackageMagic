@@ -6,7 +6,7 @@ using System.Collections.Generic;
     namespace PackageMagic.Nuget.interfaces
     {
 
-        public delegate void ChangedCallback(IPackageMagic package);
+        //public delegate void ChangedCallback(IPackageMagic package);
 
         public class NugetPackage: IPackageMagic
         {
@@ -17,11 +17,11 @@ using System.Collections.Generic;
             public static List<NugetPackage> PackageInformation;
             static NugetPackage()
             {
-                PackageInformation = new List<NugetPackage>();
+                //PackageInformation = new List<NugetPackage>();
             }
 
             public IPackage NugetPackageInformation { get; set; }
-            string IPackageMagic.Version { get; set; }
+            
             public string Description { get; set; }
             
 
