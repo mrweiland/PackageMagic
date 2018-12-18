@@ -9,7 +9,7 @@ namespace PackagesNpm
 {
     public class NpmPackage : IPackageMagic
     {
-        public delegate void ChangedCallback(IPackageMagic package);
+        //public delegate void ChangedCallback(IPackageMagic package);
 
 
             public string Id { get; set; }
@@ -23,7 +23,6 @@ namespace PackagesNpm
             }
 
 
-            string IPackageMagic.Version { get; set; }
             public string Description { get; set; }
 
 

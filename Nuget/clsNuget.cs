@@ -46,8 +46,8 @@ namespace PackageMagic.Nuget
         /// <returns></returns>
         public static async Task SearchCsProj(string file)
         {
-            await Task.Run(() =>
-           {
+           // await Task.Run(() =>
+           //{
                XmlDocument xDoc = new XmlDocument();
                     //Utils.LogMessages($"CS Proj file {file}", true);
                     using (var fs = new FileStream(file, FileMode.Open))
@@ -84,7 +84,7 @@ namespace PackageMagic.Nuget
                                }
 
 
-                               clsPackages.AddToPackageInformation(new NugetPackage { Name = node.Attributes["Include"].Value, Version = packageVersion, Description = "", Origin = "PackageReference" }).GetAwaiter().GetResult();
+                               await clsPackages.AddToPackageInformation(new NugetPackage { Name = node.Attributes["Include"].Value, Version = packageVersion, Description = "", Origin = "PackageReference" });
                            }
                            catch (Exception)
                            {
@@ -98,7 +98,7 @@ namespace PackageMagic.Nuget
 
                }
 
-           });
+           //});
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace PackageMagic.Nuget
         /// <returns></returns>
         public static async Task SearchForPackagesConfig(string projectDirectory)
         {
-            Utils.LogMessages($"Search package config {projectDirectory}", true);
+            PackageManager.Utils.LogMessages($"Search package config {projectDirectory}", true);
             await Task.Run(() =>
             {
                 string[] packagesConfig = Directory.GetFiles(projectDirectory, "packages.config", SearchOption.AllDirectories);
@@ -117,7 +117,7 @@ namespace PackageMagic.Nuget
                 {
                     //NugetPackages p = new NugetPackages();
                     var directoryName = Path.GetDirectoryName(packConfig);
-                    Utils.LogMessages(directoryName);
+                    PackageManager.Utils.LogMessages(directoryName);
                     string foundCsProjFile = "";
                     if (directoryName != null)
                     {
@@ -156,7 +156,7 @@ namespace PackageMagic.Nuget
                     foreach (PackageReference packageReference in file.GetPackageReferences())
                     {
 
-                        Utils.LogMessages(packageReference.Id, true);
+                        PackageManager.Utils.LogMessages(packageReference.Id, true);
 
                         var package = new NugetPackage { Name = packageReference.Id, Version = packageReference.Version.ToNormalizedString(), Description = foundCsProjFile, Origin = "PackageConfig" };
 
@@ -170,15 +170,15 @@ namespace PackageMagic.Nuget
         {
             IPackage pack;
             IPackageRepository repo = PackageRepositoryFactory.Default.CreateRepository("https://packages.nuget.org/api/v2");
-            Utils.LogMessages($"Checking nuget package information from https://packages.nuget.org/api/v2");
+            PackageManager.Utils.LogMessages($"Checking nuget package information from https://packages.nuget.org/api/v2");
             await Task.Run(() =>
             {
                 foreach (var item in NugetPackage.PackageInformation.FindAll(o => o.Origin == "PackageConfig" || o.Origin == "PackageReference"))
                 {
                     pack = repo.FindPackage(item.Name, SemanticVersion.Parse(item.Version));
                     item.NugetPackageInformation = pack;
-                    Utils.LogMessages($"Checking nuget package information  {item.Name}:{item.Version}");
-                    Utils.LogMessages(pack.Id, true);
+                    PackageManager.Utils.LogMessages($"Checking nuget package information  {item.Name}:{item.Version}");
+                    PackageManager.Utils.LogMessages(pack.Id, true);
                 }
             });
 
