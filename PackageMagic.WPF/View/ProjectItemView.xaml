@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="PackageMagic.WPF.View.ProjectItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PackageMagic.WPF.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <ListView ItemsSource="{Binding SelectedProject.Packages}" SelectedItem="{Binding SelectedPackage}">
+        <ListView.View>
+            <GridView>
+                <GridViewColumn Width="80" Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                <GridViewColumn Width="80" Header="Version" DisplayMemberBinding="{Binding Path=Version}"/>
+                <GridViewColumn Width="160" Header="Description" DisplayMemberBinding="{Binding Path=Description}"/>
+                <GridViewColumn Width="160" Header="Packagetype" DisplayMemberBinding="{Binding Path=PackageType}"/>
+            </GridView>
+        </ListView.View>
+    </ListView>
+
+</UserControl>

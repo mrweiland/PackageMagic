@@ -10,7 +10,7 @@ namespace PackageMagic.General.Interface
         MessageDelegate MessageCallback { get; set; }
         //string Id { get; set; }
         Task<IEnumerable<IMagicPackage>> SearchPackages(string path);
-        Task AddPackages(IMagicPackage package);
-        IList<IMagicPackage> GetPackages();
+        //Task AddPackages(IMagicPackage package);
+        //IList<IMagicPackage> GetPackages();
     }
 }

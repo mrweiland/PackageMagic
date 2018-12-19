@@ -1,5 +1,6 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using PackageMagic.General.Interface;
 using PackageMagic.PackageService.Interface;
 using PackageMagic.WPF.Interface;
 using System;
@@ -30,6 +31,14 @@ namespace PackageMagic.WPF.ViewModel
             set => Set(() => SelectedProject, ref _selectedProject, value);
         }
         private IMagicProject _selectedProject;
+
+        //This should be bound to the controls in the PackageItemView
+        public IMagicPackage SelectedPackage
+        {
+            get => _selectedPackage;
+            set => Set(() => SelectedPackage, ref _selectedPackage, value);
+        }
+        private IMagicPackage _selectedPackage;
 
         //This should be bound to a control in the StatusbarView
         public string Status

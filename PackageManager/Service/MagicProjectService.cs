@@ -37,12 +37,12 @@ namespace PackageMagic.PackageService.Service
                 theSearcher.MessageCallback -= MessageCallback;
 
                 //TODO! Follow same naming conventions on namespaces and classnames in both Nuget and Npm library!
-                theSearcher = new Npm();
-                theSearcher.MessageCallback += MessageCallback;
+                //theSearcher = new Npm();
+                //theSearcher.MessageCallback += MessageCallback;
 
                 //Use the npm object for parsing npm package references
-                project.Packages.AddRange(await theSearcher.SearchPackages(project.Path));
-                theSearcher.MessageCallback -= MessageCallback;
+                //project.Packages.AddRange(await theSearcher.SearchPackages(project.Path));
+                //theSearcher.MessageCallback -= MessageCallback;
 
                 listProjects.Add(project);
             }
