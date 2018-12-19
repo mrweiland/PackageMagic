@@ -5,8 +5,13 @@ namespace PackageMagic.WPF.Model
 {
     public class NpmPackage : ObservableObject, IMagicPackage
     {
-        public string Id { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string Path { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public PackageType Type { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string Id { get => _id; set => _id = value; }
+        private string _id;
+
+        public string Path { get => _path; set => _path = value; }
+        private string _path;
+
+        public PackageType Type { get => _type; set => _type = value; }
+        private PackageType _type;
     }
 }

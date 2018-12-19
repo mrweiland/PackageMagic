@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:PackageMagic.WPF.View"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="800"
-             DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}">
+             DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
     
     <Grid>
         <StackPanel Orientation="Horizontal" Margin="4">

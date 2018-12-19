@@ -1,7 +1,10 @@
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using PackageMagic.WPF.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PackageMagic.WPF.ViewModel
@@ -9,7 +12,7 @@ namespace PackageMagic.WPF.ViewModel
     public class MainViewModel : ViewModelBase
     {
         //This is our data service injected from the ViewModelLocator
-        private IPackageService _packageService;
+        private IMagicPackageService _packageService;
 
         //This should be bound to the controls in the PackageListView
         public IEnumerable<IMagicPackage> Packages
@@ -34,19 +37,46 @@ namespace PackageMagic.WPF.ViewModel
             set => Set(() => Status, ref _status, value);
         }
         private string _status;
-        
+
+        //This property is keeping track if we are running a refresh for the moment, it toggles the Refresh button on and off
+        public bool Busy
+        {
+            get => _busy;
+            set => Set(() => Busy, ref _busy, value);
+        }
+        private bool _busy;
+
+        //This is the binding for the button Refresh on the toolbar, 
+        //the first parameter is an async lambda for Execute and the second is a lambda for CanExecute
+        public RelayCommand RefreshCommand => _refreshCommand ?? (_refreshCommand = new RelayCommand(
+                       async () => { await Refresh(); },
+                       () => { return !Busy; }));
+        private RelayCommand _refreshCommand;
+
+        //This async task will be executed when the user pushes Refresh
+        private async Task Refresh()
+        {
+            Busy = true;
+            RefreshCommand.RaiseCanExecuteChanged();
+            Status = "Refreshing";
+            Packages = await _packageService.GetPackagesAsync(@"C:\Repos");
+
+            //Just as POC I will delay the task here to see if everything gets updated accordingly and that the application don't freeze
+            await Task.Delay(2000);
+
+            Status = "";
+            Busy = false;
+            RefreshCommand.RaiseCanExecuteChanged();
+        }
+
         //This task property keeps track if the async Initialize has run to completion
         public Task Initialized {
             get => _initialized;
-            private set
-            {
-                _initialized = value;
-                Status = _initialized.Status.ToString();
-            }
+            private set=>_initialized = value;
         }
         private Task _initialized;
 
-        public MainViewModel(IPackageService packageService)
+        public MainViewModel(IMagicPackageService packageService)
         {
             //This will be automatically injected by the ViewModelLocator
             _packageService = packageService;
@@ -60,8 +90,12 @@ namespace PackageMagic.WPF.ViewModel
         {
             //This will run async at startup and the property Initialized will be awaitable if needed.
             //You could even make something happen in the setter for the property to indicate that Initialize has been finished.
-            await Task.Delay(2000);
-            Packages = await _packageService.GetPackagesAsync(@"C:\Repos");
+            await Refresh();
+
+            if (IsInDesignMode)
+            {
+                SelectedPackage = Packages.FirstOrDefault();
+            }
         }
     }
 }

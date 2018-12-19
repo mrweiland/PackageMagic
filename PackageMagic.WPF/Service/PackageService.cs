@@ -4,7 +4,7 @@ using PackageMagic.WPF.Interface;
 
 namespace PackageMagic.WPF.Service
 {
-    public class PackageService : IPackageService
+    public class PackageService : IMagicPackageService
     {
         private string _path;
         private List<IMagicPackage> _packages;

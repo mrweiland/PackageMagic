@@ -7,7 +7,7 @@
         xmlns:View="clr-namespace:PackageMagic.WPF.View"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}">
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
     
     <Grid>
         <Grid.RowDefinitions>

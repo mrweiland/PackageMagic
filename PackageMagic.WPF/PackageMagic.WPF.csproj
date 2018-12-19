@@ -71,8 +71,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Design\DesignPackageService.cs" />
-    <Compile Include="Interface\IPackage.cs" />
-    <Compile Include="Interface\IPackageService.cs" />
+    <Compile Include="Interface\IMagicPackage.cs" />
+    <Compile Include="Interface\IMagicPackageService.cs" />
     <Compile Include="Model\PackageType.cs" />
     <Compile Include="Model\NpmPackage.cs" />
     <Compile Include="Model\NugetPackage.cs" />

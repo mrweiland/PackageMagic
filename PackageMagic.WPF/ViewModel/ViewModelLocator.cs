@@ -29,12 +29,12 @@ namespace PackageMagic.WPF.ViewModel
             if (ViewModelBase.IsInDesignModeStatic)
             {
                 // Create design time view services and models
-                SimpleIoc.Default.Register<IPackageService, DesignPackageService>();
+                SimpleIoc.Default.Register<IMagicPackageService, DesignPackageService>();
             }
             else
             {
                 // Create run time view services and models
-                SimpleIoc.Default.Register<IPackageService, PackageService>();
+                SimpleIoc.Default.Register<IMagicPackageService, DesignPackageService>();
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
