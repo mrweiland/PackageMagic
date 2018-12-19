@@ -16,7 +16,7 @@ using PackagesNpm;
 
 namespace WindowsFormsApp2
 {
-    public delegate void DoLog(IPackageMagic package);
+    public delegate void DoLog(IMagicPackage package);
 
     public partial class Form1 : Form
     {
@@ -34,11 +34,11 @@ namespace WindowsFormsApp2
             LogPackage += DoLogPackage;
 
         }
-        public  void DoLogPackage(IPackageMagic package)
+        public  void DoLogPackage(IMagicPackage package)
         {
             //if (txtLog.InvokeRequired)
             //{
-            //    this.BeginInvoke(new Action<IPackageMagic>(DoLogPackage), new object[] { package.Name });
+            //    this.BeginInvoke(new Action<IMagicPackage>(DoLogPackage), new object[] { package.Name });
             //}
             //else
             //{
@@ -58,9 +58,9 @@ namespace WindowsFormsApp2
             clsPackages.Callback -= CallbackFromPackage;
         }
 
-        private  void CallbackFromPackage(IPackageMagic package)
+        private  void CallbackFromPackage(IMagicPackage package)
         {
-            if(package!=null && package is IPackageMagic)
+            if(package!=null && package is IMagicPackage)
             {
                 //Debug.WriteLine(((NugetPackage)package).Name);
                 LogPackage(package);
