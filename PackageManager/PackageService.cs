@@ -1,29 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PackageMagic.PackageService.Interfaces
 {
-    public class MagicPackageRunner
+    public class MagicProjectService
     {
-        public MagicPackageRunner() { 
+        public MagicProjectService()
+        {
         }
 
-        static async Task Runner(){
+        static async Task<IEnumerable<IMagicProject>> GetProjects(string pathToSearch)
         {
-            // projects = await GetProjects()
+            List<IMagicProject> listProjects = new List<IMagicProject>();
+            string[] projectFiles = Directory.GetFiles(pathToSearch, "*.csproj", SearchOption.AllDirectories);
+            foreach (var csProjFile in projectFiles)
+            {
+                //listProjects.Add(new IMagicProject())
+            }
+            //var projects = await GetProjects();
+
             //foreach (var project in IMagicProject)
             //{ 
             //    // project.Packages.AddRange(await npm.SearchPackages(project.path))
             //    // project.Packages.AddRange(await  nuget.SearchPackages(project.path))
             //}
         }
-}
 
-
-    public interface IMagicProject
+        
+    }
+        public interface IMagicProject
     {
         //string Id { get; set; }
         string Name { get; set; }
