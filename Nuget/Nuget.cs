@@ -1,7 +1,6 @@
-﻿
-
-using NuGet;
-using PackageMagic.PackageService.Interfaces;
+﻿using NuGet;
+using PackageMagic.PackageService.Interface;
+using PackageMagic.PackageService.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -100,7 +99,7 @@ namespace PackageMagic.Nuget
                             }
 
 
-                            temp.Add(new NugetPackage { Name = node.Attributes["Include"].Value, Version = packageVersion, Description = "", PackageType = IMagickPackageType.PackageReference });
+                            temp.Add(new NugetPackage { Name = node.Attributes["Include"].Value, Version = packageVersion, Description = "", PackageType = MagicPackageType.PackageReference });
 
                             //await AddPackages(package);
 
@@ -180,7 +179,7 @@ namespace PackageMagic.Nuget
 
                    PackageService.Utils.LogMessages(packageReference.Id, true);
 
-                   var package = new NugetPackage { Name = packageReference.Id, Version = packageReference.Version.ToNormalizedString(), Description = foundCsProjFile, PackageType = IMagickPackageType.PackageConfig };
+                   var package = new NugetPackage { Name = packageReference.Id, Version = packageReference.Version.ToNormalizedString(), Description = foundCsProjFile, PackageType = MagicPackageType.PackageConfig };
 
                     //await AddPackages(package);
                     temp.Add(package);

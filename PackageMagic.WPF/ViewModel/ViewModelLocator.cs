@@ -14,6 +14,8 @@
 using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
+using PackageMagic.PackageService.Interface;
+using PackageMagic.PackageService.Service;
 using PackageMagic.WPF.Design;
 using PackageMagic.WPF.Interface;
 using PackageMagic.WPF.Service;
@@ -29,12 +31,12 @@ namespace PackageMagic.WPF.ViewModel
             if (ViewModelBase.IsInDesignModeStatic)
             {
                 // Create design time view services and models
-                SimpleIoc.Default.Register<IMagicPackageService, DesignPackageService>();
+                SimpleIoc.Default.Register<IMagicProjectService, DesignMagicProjectService>();
             }
             else
             {
                 // Create run time view services and models
-                SimpleIoc.Default.Register<IMagicPackageService, PackageService>();
+                SimpleIoc.Default.Register<IMagicProjectService, MagicProjectService>();
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
