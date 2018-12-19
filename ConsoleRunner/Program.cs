@@ -38,6 +38,8 @@ namespace ConsoleRunner
             {
                 Console.WriteLine(item.Name);
             }
+            Console.WriteLine($"NPM {npm.GetPackages().Count} Nuget {nuget.GetPackages().Count} ");
+            Console.ReadLine();
         }
     }
 }

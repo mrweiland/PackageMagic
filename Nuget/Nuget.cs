@@ -23,8 +23,11 @@ namespace PackageMagic.Nuget
         }
         public async Task AddPackages(IMagicPackage package) => await Task.Run(() =>
         {
-            _packages.Add(package);
-
+            IMagicPackage checkIfExist = _packages.Find(z => z.Name == package.Name && z.Version == package.Version);
+            if (checkIfExist == null)
+            {
+                _packages.Add(package);
+            }
 
         });
 
