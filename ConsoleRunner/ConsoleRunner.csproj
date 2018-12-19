@@ -8,10 +8,11 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>ConsoleRunner</RootNamespace>
     <AssemblyName>ConsoleRunner</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -54,9 +55,9 @@
       <Project>{5b53af09-68d2-4618-a13e-5f052945adc5}</Project>
       <Name>PackagesNuget</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PackageManager\PackageManager.csproj">
+    <ProjectReference Include="..\PackageManager\PackageService.csproj">
       <Project>{ffe9979e-f1f6-439d-a60d-2cd1826a0202}</Project>
-      <Name>PackageManager</Name>
+      <Name>PackageService</Name>
     </ProjectReference>
     <ProjectReference Include="..\PackagesNpm\PackagesNpm.csproj">
       <Project>{7e7bd2cb-493f-45da-b23d-c8d79cb60f5b}</Project>

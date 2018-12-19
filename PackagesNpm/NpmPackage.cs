@@ -1,4 +1,5 @@
-﻿using PackageMagic.PackageManager;
+﻿
+using PackageMagic.PackageService.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,10 @@ namespace PackagesNpm
             public string Id { get; set; }
             public string Name { get; set; }
             public string Version { get; set; }
-            public static List<NpmPackage> PackageInformation;
+            public static List<IMagicPackage> PackageInformation;
             static NpmPackage()
             {
-                //PackageInformation = new List<NpmPackage>();
+                PackageInformation = new List<IMagicPackage>();
             }
 
 
@@ -26,10 +27,9 @@ namespace PackagesNpm
 
         public IMagickPackageType PackageType { get; set; }
 
-        public IEnumerable<IMagickPackageType> Packages()
-        {
-            throw new NotImplementedException();
-        }
+  
+
+
     }
 
 }

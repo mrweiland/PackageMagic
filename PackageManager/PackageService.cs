@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PackageMagic.PackageManager
+namespace PackageMagic.PackageService.Interfaces
 {
     public interface IMagicPackage
     {
@@ -14,11 +14,15 @@ namespace PackageMagic.PackageManager
         string Description { get; set; }
         IMagickPackageType PackageType { get; set; }
 
-        IEnumerable<IMagickPackageType> Packages();
-     
 
 
-        
+    }
+    public interface IMagicPackageSearch
+    {
+        //string Id { get; set; }
+        Task SearchPackages(string path);
+        Task AddPackages(IMagicPackage package);
+        IList<IMagicPackage> GetPackages();
     }
 
     public enum IMagickPackageType

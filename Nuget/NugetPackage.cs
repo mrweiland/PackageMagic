@@ -1,9 +1,11 @@
 ﻿
-    using NuGet;
-using PackageMagic.PackageManager;
-using System.Collections.Generic;
+using NuGet;
 
-    namespace PackageMagic.Nuget.interfaces
+using PackageMagic.PackageService.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace PackageMagic.Nuget
     {
 
     //public delegate void ChangedCallback(IMagicPackage package);
@@ -13,10 +15,10 @@ using System.Collections.Generic;
             //public string Id { get; set; }
             public string Name { get; set; }
             public string Version { get; set; }
-            public static List<NugetPackage> PackageInformation;
+            public static List<IMagicPackage> PackageInformation;
             static NugetPackage()
             {
-                //PackageInformation = new List<NugetPackage>();
+                PackageInformation = new List<IMagicPackage>();
             }
 
         public IPackage NugetPackageInformation { get; set; }
@@ -24,10 +26,9 @@ using System.Collections.Generic;
         public string Description { get; set; }
         public IMagickPackageType PackageType { get; set; }
 
-        public IEnumerable<IMagickPackageType> Packages()
-        {
-            throw new System.NotImplementedException();
-        }
+
+
+
     }
 
     }
