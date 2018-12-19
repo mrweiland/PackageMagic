@@ -49,11 +49,11 @@ namespace WindowsFormsApp2
         private async Task Runner()
         {
             List<Task> t = new List<Task>();
-            var _projectDirectory = @"c:\git\";
+            var _projectDirectory = @"c:\repos\";
             clsPackages.Callback += CallbackFromPackage;
             t.Add(clsNuget.SearchForPackagesConfig(_projectDirectory));
             t.Add(clsNuget.PopulatePackageReferences(_projectDirectory));
-            t.Add(clsNpm.LoopPackageJson(@"C:\git\package.json"));
+            //t.Add(clsNpm.LoopPackageJson(@"C:\git\package.json"));
             await Task.WhenAll(t);
             clsPackages.Callback -= CallbackFromPackage;
         }
