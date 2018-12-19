@@ -18,7 +18,7 @@ namespace PackageMagic.WPF.Design
             List<IMagicPackage> result = new List<IMagicPackage>
             {
                 new NugetPackage { Id = "NewtonSoft.Json", Path = @"C:\Repos\Nuget", Type = PackageType.Nuget },
-                new NugetPackage { Id = "AnyNpm", Path = @"C:\Repos\Npm", Type = PackageType.Npm }
+                new NpmPackage { Id = "AnyNpm", Path = @"C:\Repos\Npm", Type = PackageType.Npm }
             };
             return result;
         });

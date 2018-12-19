@@ -34,7 +34,7 @@ namespace PackageMagic.WPF.ViewModel
             else
             {
                 // Create run time view services and models
-                SimpleIoc.Default.Register<IMagicPackageService, DesignPackageService>();
+                SimpleIoc.Default.Register<IMagicPackageService, PackageService>();
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
