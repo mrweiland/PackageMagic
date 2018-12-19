@@ -24,5 +24,10 @@ namespace PackageMagic.WPF
         {
             InitializeComponent();
         }
+
+        private void PackageItemView_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using PackageMagic.Nuget;
-using PackageMagic.PackageManager;
+
 using PackagesNpm;
 using System;
 using System.Collections.Generic;
@@ -21,10 +21,25 @@ namespace ConsoleRunner
             List<Task> t = new List<Task>();
             var _projectDirectory = @"c:\git\tobias";
             //clsPackages.Callback += CallbackFromPackage;
-            t.Add(clsNuget.SearchForPackagesConfig(_projectDirectory));
-            t.Add(clsNuget.PopulatePackageReferences(_projectDirectory));
-            t.Add(clsNpm.LoopPackageJson(@"C:\git\tobias\package.json"));
-            await Task.WhenAll(t);
+            //PackageService.GetPackages(IMagickPackageType.Npm, Packa)
+
+            var nuget = new Nuget();
+            var npm = new Npm();
+            var x = await nuget.SearchPackages(_projectDirectory);
+            var y = await npm.SearchPackages(@"C:\git\tobias\package.json");
+
+
+
+            foreach (var item in x)
+            {
+                Console.WriteLine(item.Name);
+            }
+            foreach (var item in y)
+            {
+                Console.WriteLine(item.Name);
+            }
+            Console.WriteLine($"NPM {y.Count()} Nuget {x.Count()} ");
+            Console.ReadLine();
         }
     }
 }
