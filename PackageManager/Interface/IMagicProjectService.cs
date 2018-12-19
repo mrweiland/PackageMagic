@@ -1,4 +1,5 @@
-﻿using PackageMagic.PackageService.Model;
+﻿using PackageMagic.General.Type;
+using PackageMagic.PackageService.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

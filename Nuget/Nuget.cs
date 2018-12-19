@@ -1,6 +1,7 @@
 ﻿using NuGet;
-using PackageMagic.PackageService.Interface;
-using PackageMagic.PackageService.Model;
+using PackageMagic.General;
+using PackageMagic.General.Interface;
+using PackageMagic.General.Type;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,9 @@ namespace PackageMagic.Nuget
 {
     public class Nuget : IMagicPackageSearch
     {
+        //New callback to the status field in the window
+        public MessageDelegate MessageCallback { get; set; }
+
         //public static ChangedCallback Callback { get; set; }
         public List<IMagicPackage> _packages;
         public Nuget()
@@ -130,7 +134,7 @@ namespace PackageMagic.Nuget
        {
 
            List<NugetPackage> temp = new List<NugetPackage>();
-           PackageService.Utils.LogMessages($"Search package config {projectDirectory}", true);
+           Utils.LogMessages($"Search package config {projectDirectory}", true);
 
            string[] packagesConfig = Directory.GetFiles(projectDirectory, "packages.config", SearchOption.AllDirectories);
 
@@ -138,7 +142,7 @@ namespace PackageMagic.Nuget
            {
                 //NugetPackages p = new NugetPackages();
                 var directoryName = Path.GetDirectoryName(packConfig);
-               PackageService.Utils.LogMessages(directoryName);
+               Utils.LogMessages(directoryName);
                string foundCsProjFile = "";
                if (directoryName != null)
                {
@@ -177,7 +181,7 @@ namespace PackageMagic.Nuget
                foreach (PackageReference packageReference in file.GetPackageReferences())
                {
 
-                   PackageService.Utils.LogMessages(packageReference.Id, true);
+                   Utils.LogMessages(packageReference.Id, true);
 
                    var package = new NugetPackage { Name = packageReference.Id, Version = packageReference.Version.ToNormalizedString(), Description = foundCsProjFile, PackageType = MagicPackageType.PackageConfig };
 

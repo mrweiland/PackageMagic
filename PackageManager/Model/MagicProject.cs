@@ -1,4 +1,5 @@
-﻿using PackageMagic.PackageService.Interface;
+﻿using PackageMagic.General.Interface;
+using PackageMagic.PackageService.Interface;
 using PackageMagic.PackageService.Model;
 using PackageMagic.PackageService.Service;
 using System;

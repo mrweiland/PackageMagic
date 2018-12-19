@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
-using PackageMagic.PackageService.Interface;
-using PackageMagic.PackageService.Model;
+using PackageMagic.General.Interface;
+using PackageMagic.General.Type;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +13,9 @@ namespace PackagesNpm
 {
     public class Npm : IMagicPackageSearch
     {
+        //New callback to the status field in the window
+        public MessageDelegate MessageCallback { get; set; }
+
         public static readonly string NpmPath;
         public static string NpmRegistry { get; set; }
         private List<IMagicPackage> _packages;

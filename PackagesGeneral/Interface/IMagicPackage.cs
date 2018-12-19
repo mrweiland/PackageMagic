@@ -1,6 +1,6 @@
-﻿using PackageMagic.PackageService.Model;
+﻿using PackageMagic.General.Type;
 
-namespace PackageMagic.PackageService.Interface
+namespace PackageMagic.General.Interface
 {
     public interface IMagicPackage
     {

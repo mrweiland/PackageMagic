@@ -159,6 +159,10 @@
       <Project>{FFE9979E-F1F6-439D-A60D-2CD1826A0202}</Project>
       <Name>PackageService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PackagesGeneral\PackagesGeneral.csproj">
+      <Project>{4075CA79-5685-404D-AAC0-4562F007F712}</Project>
+      <Name>PackagesGeneral</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PackagesNpm\PackagesNpm.csproj">
       <Project>{7E7BD2CB-493F-45DA-B23D-C8D79CB60F5B}</Project>
       <Name>PackagesNpm</Name>

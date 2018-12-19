@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PackageMagic.General.Interface;
+using System.Collections.Generic;
 
 namespace PackageMagic.PackageService.Interface
 {

@@ -52,9 +52,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PackageManager\PackageService.csproj">
-      <Project>{ffe9979e-f1f6-439d-a60d-2cd1826a0202}</Project>
-      <Name>PackageService</Name>
+    <ProjectReference Include="..\PackagesGeneral\PackagesGeneral.csproj">
+      <Project>{4075CA79-5685-404D-AAC0-4562F007F712}</Project>
+      <Name>PackagesGeneral</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

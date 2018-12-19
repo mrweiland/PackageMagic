@@ -1,4 +1,4 @@
-﻿namespace PackageMagic.PackageService.Model
+﻿namespace PackageMagic.General.Type
 {
     public enum MagicPackageType
     {

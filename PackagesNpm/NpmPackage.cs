@@ -1,5 +1,5 @@
-﻿using PackageMagic.PackageService.Interface;
-using PackageMagic.PackageService.Model;
+﻿using PackageMagic.General.Interface;
+using PackageMagic.General.Type;
 using System;
 using System.Collections.Generic;
 using System.Linq;
