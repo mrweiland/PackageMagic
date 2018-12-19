@@ -7,11 +7,12 @@
     <ProjectGuid>{FFE9979E-F1F6-439D-A60D-2CD1826A0202}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PackageMagic.PackageManager</RootNamespace>
-    <AssemblyName>PackageMagic.PackageManager</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>PackageMagic.PackageService</RootNamespace>
+    <AssemblyName>PackageMagic.PackageService</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,8 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="clsPackageManager.cs" />
-    <Compile Include="clsPackages.cs" />
+    <Compile Include="PackageService.cs" />
+    <Compile Include="Packages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>

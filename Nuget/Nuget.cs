@@ -1,8 +1,7 @@
 ﻿
 
 using NuGet;
-using PackageMagic.Nuget.interfaces;
-using PackageMagic.PackageManager;
+using PackageMagic.PackageService.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,19 +12,34 @@ using System.Xml;
 
 namespace PackageMagic.Nuget
 {
-    public class clsNuget
+    public class Nuget : IMagicPackageSearch
     {
         //public static ChangedCallback Callback { get; set; }
+        public List<IMagicPackage> _packages;
+        public Nuget()
+        {
+            _packages = new List<IMagicPackage>();
+            
+        }
+        public async Task AddPackages(IMagicPackage package) => await Task.Run(() =>
+        {
+            _packages.Add(package);
 
+
+        });
+
+        public IList<IMagicPackage> GetPackages()
+        {
+            return _packages;
+        }
         /// <summary>
         /// Loads the nuget feed provided. Loops all packages and adds them to PackageInformation List.
         /// </summary>
         /// <param name="nugetFeedSourceV2">The nuget feed source v2.</param>
         /// <returns></returns>
-        public static async Task LoadNugetFeed(string nugetFeedSourceV2)
+        public async Task LoadNugetFeed(string nugetFeedSourceV2) => await Task.Run(async () =>
         {
-            await Task.Run(() =>
-            {
+        
                 var repo = PackageRepositoryFactory.Default.CreateRepository(nugetFeedSourceV2);
 
                 var packages = repo.GetPackages();
@@ -34,17 +48,19 @@ namespace PackageMagic.Nuget
                     var pack = repo.FindPackage(package1.Id);
 
                     //AddToPackageInformation(new NugetPackage { Name = pack.Id, Version = pack.Version.ToString(), Description = pack.Description, FeedRegistry = nugetFeedSourceV2, OriginOfPackage = NugetPackage.Origin.Nuget }).GetAwaiter().GetResult();
-                    clsPackages.AddToPackageInformation(new NugetPackage { Name = pack.Id, Version = pack.Version.ToString(), Description = pack.Description, PackageType = IMagickPackageType.Nuget }).GetAwaiter().GetResult();
+                    await AddPackages(new NugetPackage { Name = pack.Id, Version = pack.Version.ToString(), Description = pack.Description, PackageType = IMagickPackageType.Nuget });
                 }
             });
-        }
+        
+
+
 
         /// <summary>
         /// Searches the csproj files that is found. Searching for <Reference></Reference> and <PackageReference></PackageReference> in those files to support both new and old nuget format.
         /// </summary>
         /// <param name="file">The .csproj file.</param>
         /// <returns></returns>
-        public static async Task SearchCsProj(string file)
+        private async Task SearchCsProj(string file) => await Task.Run(async () =>
         {
            // await Task.Run(() =>
            //{
@@ -84,7 +100,7 @@ namespace PackageMagic.Nuget
                                }
 
 
-                               await clsPackages.AddToPackageInformation(new NugetPackage { Name = node.Attributes["Include"].Value, Version = packageVersion, Description = "", PackageType = IMagickPackageType.PackageReference });
+                               await AddPackages(new NugetPackage { Name = node.Attributes["Include"].Value, Version = packageVersion, Description = "", PackageType = IMagickPackageType.PackageReference });
                            }
                            catch (Exception)
                            {
@@ -98,26 +114,25 @@ namespace PackageMagic.Nuget
 
                }
 
-           //});
-        }
+           
+        });
 
         /// <summary>
         /// Searches for packages configuration. (packages.config)
         /// </summary>
         /// <param name="projectDirectory">The project directory.</param>
         /// <returns></returns>
-        public static async Task SearchForPackagesConfig(string projectDirectory)
+        private async Task SearchForPackagesConfig(string projectDirectory) => await Task.Run(async () =>
         {
-            PackageManager.Utils.LogMessages($"Search package config {projectDirectory}", true);
-            await Task.Run(() =>
-            {
+            PackageService.Utils.LogMessages($"Search package config {projectDirectory}", true);
+         
                 string[] packagesConfig = Directory.GetFiles(projectDirectory, "packages.config", SearchOption.AllDirectories);
 
                 foreach (var packConfig in packagesConfig)
                 {
                     //NugetPackages p = new NugetPackages();
                     var directoryName = Path.GetDirectoryName(packConfig);
-                    PackageManager.Utils.LogMessages(directoryName);
+                PackageService.Utils.LogMessages(directoryName);
                     string foundCsProjFile = "";
                     if (directoryName != null)
                     {
@@ -156,40 +171,43 @@ namespace PackageMagic.Nuget
                     foreach (PackageReference packageReference in file.GetPackageReferences())
                     {
 
-                        PackageManager.Utils.LogMessages(packageReference.Id, true);
+                    PackageService.Utils.LogMessages(packageReference.Id, true);
 
                         var package = new NugetPackage { Name = packageReference.Id, Version = packageReference.Version.ToNormalizedString(), Description = foundCsProjFile, PackageType = IMagickPackageType.PackageConfig };
 
-                        clsPackages.AddToPackageInformation(package).GetAwaiter().GetResult();
+                        await AddPackages(package);
                     }
                 }
             });
-        }
+        
 
-        public static async Task GetNugetPackageInformation()
+        private  async Task GetNugetPackageInformation() => await Task.Run(() =>
         {
             IPackage pack;
             IPackageRepository repo = PackageRepositoryFactory.Default.CreateRepository("https://packages.nuget.org/api/v2");
-            PackageManager.Utils.LogMessages($"Checking nuget package information from https://packages.nuget.org/api/v2");
-            await Task.Run(() =>
-            {
+            PackageService.Utils.LogMessages($"Checking nuget package information from https://packages.nuget.org/api/v2");
+        
                 foreach (var item in NugetPackage.PackageInformation.FindAll(o => o.PackageType == IMagickPackageType.PackageConfig  || o.PackageType == IMagickPackageType.PackageReference))
                 {
                     pack = repo.FindPackage(item.Name, SemanticVersion.Parse(item.Version));
-                    item.NugetPackageInformation = pack;
-                    PackageManager.Utils.LogMessages($"Checking nuget package information  {item.Name}:{item.Version}");
-                    PackageManager.Utils.LogMessages(pack.Id, true);
+                    ((NugetPackage) item).NugetPackageInformation = pack;
+                    PackageService.Utils.LogMessages($"Checking nuget package information  {item.Name}:{item.Version}");
+                    PackageService.Utils.LogMessages(pack.Id, true);
                 }
             });
 
+        
+        public async Task SearchPackages(string path)
+        {
+            await PopulatePackageReferences(path);
+            await SearchForPackagesConfig(path);
         }
-
         /// <summary>
         /// Populates the package references and calls <see cref="SearchCsProj"/>
         /// </summary>
         /// <param name="projectDirectory">The project directory.</param>
         /// <returns></returns>
-        public static async Task PopulatePackageReferences(string projectDirectory)
+        private async Task PopulatePackageReferences(string projectDirectory)
         {
 
             string[] csProjFiles = Directory.GetFiles(projectDirectory, "*.csproj", SearchOption.AllDirectories);
@@ -199,6 +217,8 @@ namespace PackageMagic.Nuget
             }
 
         }
+
+        
 
         //public static async Task AddToPackageInformation(NugetPackage package)
         //{

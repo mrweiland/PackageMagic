@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.168
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28407.52
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackagesNuget", "Nuget\PackagesNuget.csproj", "{5B53AF09-68D2-4618-A13E-5F052945ADC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageManager", "PackageManager\PackageManager.csproj", "{FFE9979E-F1F6-439D-A60D-2CD1826A0202}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageService", "PackageManager\PackageService.csproj", "{FFE9979E-F1F6-439D-A60D-2CD1826A0202}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackagesNpm", "PackagesNpm\PackagesNpm.csproj", "{7E7BD2CB-493F-45DA-B23D-C8D79CB60F5B}"
 EndProject
