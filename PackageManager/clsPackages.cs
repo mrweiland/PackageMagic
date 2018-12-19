@@ -9,14 +9,14 @@ namespace PackageMagic.PackageManager
     public class clsPackages
     {
         public static ChangedCallback Callback { get; set; }
-        public static List<IPackageMagic> PackageInformation;
+        public static List<IMagicPackage> PackageInformation;
         static clsPackages()
         {
-                    PackageInformation = new List<IPackageMagic>();
+                    PackageInformation = new List<IMagicPackage>();
             
         }
-        public delegate void ChangedCallback(IPackageMagic package);
-        public static async Task AddToPackageInformation(IPackageMagic package)
+        public delegate void ChangedCallback(IMagicPackage package);
+        public static async Task AddToPackageInformation(IMagicPackage package)
         {
             await Task.Run(() =>
             {
@@ -25,10 +25,10 @@ namespace PackageMagic.PackageManager
                     //
                 }
                 //Utils.LogMessages(package.Name);
-                IPackageMagic checkIfExist = clsPackages.PackageInformation.Find(z => z.Name == package.Name && z.Version == package.Version);
+                IMagicPackage checkIfExist = clsPackages.PackageInformation.Find(z => z.Name == package.Name && z.Version == package.Version);
                 if (checkIfExist == null)
                 {
-                   Utils.LogMessages($"Add: {package.Name}:{package.Version} - {package.Origin}");
+                   Utils.LogMessages($"Add: {package.Name}:{package.Version} - {package.PackageType}");
                     PackageInformation.Add(package);
 
                     Callback?.Invoke(package);
