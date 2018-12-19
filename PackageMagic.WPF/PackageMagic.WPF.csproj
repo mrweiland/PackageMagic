@@ -76,7 +76,6 @@
     <Compile Include="Model\PackageType.cs" />
     <Compile Include="Model\NpmPackage.cs" />
     <Compile Include="Model\NugetPackage.cs" />
-    <Compile Include="Interface\IPackageRepository.cs" />
     <Compile Include="Service\PackageService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />

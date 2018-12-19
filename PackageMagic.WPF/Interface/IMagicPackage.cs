@@ -7,6 +7,6 @@ namespace PackageMagic.WPF.Interface
         //Add common properties and methods for all package types here
         string Id { get; set; }
         string Path { get; set; }
-        PackageType Type { get; set; }
+        PackageType Type { get; set; }//Could be replaced by (IMagePackage as NugetPackage) fx
     }
 }
