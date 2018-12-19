@@ -6,6 +6,22 @@ using System.Threading.Tasks;
 
 namespace PackageMagic.PackageService.Interfaces
 {
+    public class MagicPackageRunner
+    {
+        public MagicPackageRunner() { 
+        }
+
+        static async Task Runner(){
+        {
+            // projects = await GetProjects()
+            //foreach (var project in IMagicProject)
+            //{ 
+            //    // project.Packages.AddRange(await npm.SearchPackages(project.path))
+            //    // project.Packages.AddRange(await  nuget.SearchPackages(project.path))
+            //}
+        }
+}
+
 
     public interface IMagicProject
     {
