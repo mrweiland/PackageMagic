@@ -20,7 +20,11 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Type:" Width="80"/>
-                <TextBox Text="{Binding SelectedPackage.Type}" Width="200"/>
+                <TextBox Text="{Binding SelectedPackage}" Width="200"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Included in:" Width="80"/>
+                <TextBox Text="{Binding SelectedPackage.IncludedInProject}" Width="400"/>
             </StackPanel>
         </StackPanel>
     </Border>

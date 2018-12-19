@@ -59,6 +59,7 @@ namespace PackageMagic.WPF.ViewModel
             Busy = true;
             RefreshCommand.RaiseCanExecuteChanged();
             Status = "Refreshing";
+            _packageService.MyCallback += UpdateStatusExternal;
             Packages = await _packageService.GetPackagesAsync(@"C:\Repos");
 
             //Just as POC I will delay the task here to see if everything gets updated accordingly and that the application don't freeze
@@ -69,10 +70,13 @@ namespace PackageMagic.WPF.ViewModel
             RefreshCommand.RaiseCanExecuteChanged();
         }
 
+        private void UpdateStatusExternal(string status) => Status = status;
+
         //This task property keeps track if the async Initialize has run to completion
-        public Task Initialized {
+        public Task Initialized
+        {
             get => _initialized;
-            private set=>_initialized = value;
+            private set => _initialized = value;
         }
         private Task _initialized;
 

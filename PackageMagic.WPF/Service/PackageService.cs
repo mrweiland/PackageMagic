@@ -3,14 +3,18 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using NuGet;
 using PackageMagic.WPF.Interface;
 using PackageMagic.WPF.Model;
 
 namespace PackageMagic.WPF.Service
 {
+
     public class PackageService : IMagicPackageService
     {
         private List<IMagicPackage> _packages;
+
+        public StatusCallback MyCallback { get; set; }
 
         public async Task<IEnumerable<IMagicPackage>> GetPackagesAsync(string aPath)
         {
@@ -27,7 +31,7 @@ namespace PackageMagic.WPF.Service
 
         private async Task<IEnumerable<NpmPackage>> GetNpmPackages(string aPath)
         {
-            return null;
+            return new List<NpmPackage>();
         }
 
         private async Task<IEnumerable<NugetPackage>> GetNugetPackages(string aPath) => await Task.Run(() =>
@@ -39,15 +43,31 @@ namespace PackageMagic.WPF.Service
               return result;
           });
 
-        private async Task<IEnumerable<NugetPackage>> GetExternalNuget(string aPackageFile) => await Task.Run(() =>
+        private async Task<IEnumerable<NugetPackage>> GetExternalNuget(string aProjectFile) => await Task.Run(() =>
         {
             List<ExternalNugetPackage> packages = new List<ExternalNugetPackage>();
+
+            var aPackageFile = Path.Combine(Path.GetDirectoryName(aProjectFile), "packages.config");
+
+            MyCallback?.Invoke($"Exploring {aPackageFile}");
+
+            if (File.Exists(aPackageFile))
+            {
+                PackageReferenceFile file = new PackageReferenceFile(aPackageFile);
+                foreach(var packageReference in file.GetPackageReferences())
+                {
+                    packages.Add(new ExternalNugetPackage { Id = packageReference.Id, IncludedInProject = aProjectFile });
+                }
+            }
+
             return packages;
         });
 
         private async Task<IEnumerable<NugetPackage>> GetInternalNuget(string aProjectFile) => await Task.Run(() =>
         {
             List<InternalNugetPackage> packages = new List<InternalNugetPackage>();
+
+            MyCallback?.Invoke($"Exploring {aProjectFile}");
 
             using (FileStream fs = new FileStream(aProjectFile, FileMode.Open))
             {
@@ -85,59 +105,12 @@ namespace PackageMagic.WPF.Service
 
                     packageVersion = string.IsNullOrEmpty(packageVersion) ? targetFrameworkVersion : packageVersion;
 
-                    InternalNugetPackage package = new InternalNugetPackage { Id = packageName, IncludedInProject = aProjectFile };
-                    packages.Add(package);
-                    //Callback?.Invoke(this, $"Found internal ref to {package.Id} {package.Version} in {Path.GetFileName(item.ProjectFile)}");
+                    packages.Add(new InternalNugetPackage { Id = packageName, IncludedInProject = aProjectFile });
                 });
             }
+
             return packages;
         });
-
-        public IEnumerable<InternalNugetPackage> GetPackageReferences(string path)
-        {
-            List<InternalNugetPackage> informationItems = new List<InternalNugetPackage>();
-            IEnumerable<string> csProjectFiles = Directory.GetFiles(path, "*.csproj", SearchOption.AllDirectories);
-            Parallel.ForEach(csProjectFiles, new ParallelOptions { MaxDegreeOfParallelism = 8 }, (file) =>
-            {
-                InternalNugetPackage infoItem = new InternalNugetPackage { IncludedInProject = file };
-
-                string packagesFile = Path.Combine(Path.GetDirectoryName(file), "packages.config");
-                if (File.Exists(packagesFile))
-                {
-                    infoItem.PackagesFile = packagesFile;
-                };
-                lock (refLock)
-                {
-                    informationItems.Add(infoItem);
-                }
-                Callback?.Invoke(this, $"Added {Path.GetFileName(infoItem.ProjectFile)}");
-            });
-            //add more to search for
-            return informationItems;
-        }
-
-        private IEnumerable<NugetPackage> GetNugetPackages(InformationItem item)
-        {
-            //TODO! Complete properties
-            List<NugetPackage> packages = new List<NugetPackage>();
-
-            if (!string.IsNullOrEmpty(item.PackagesFile))
-            {
-                PackageReferenceFile file = new PackageReferenceFile(item.PackagesFile);
-                Parallel.ForEach(file.GetPackageReferences(), (packageReference) =>
-                {
-                    NugetPackage package = new NugetPackage { Id = packageReference.Id, Name = packageReference.Id, PackageType = PackageType.Nuget, Version = packageReference.Version.ToNormalizedString(), CsProjFile = item.ProjectFile, PackagesFile = item.PackagesFile };
-                    lock (nugetLock)
-                    {
-                        packages.Add(package);
-                    }
-                    Callback?.Invoke(this, $"Found external nuget ref to {package.Id} {package.Version} in {Path.GetFileName(item.ProjectFile)}");
-                });
-            }
-            packages.AddRange(GetIncludedNugetPackages(item));
-            return packages;
-        }
-
 
     }
 }

@@ -7,6 +7,8 @@ namespace PackageMagic.WPF.Design
 {
     public class DesignPackageService : IMagicPackageService
     {
+        public StatusCallback MyCallback { get; set; }
+
         //private readonly string _path;
         //private readonly List<IMagicPackage> _packages;
 
