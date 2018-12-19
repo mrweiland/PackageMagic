@@ -6,6 +6,15 @@ using System.Threading.Tasks;
 
 namespace PackageMagic.PackageService.Interfaces
 {
+
+    public interface IMagicProject
+    {
+        //string Id { get; set; }
+        string Name { get; set; }
+        string Path { get; set; }
+        List<IMagicPackage> Packages { get; set; }
+    }
+
     public interface IMagicPackage
     {
         //string Id { get; set; }
@@ -13,14 +22,12 @@ namespace PackageMagic.PackageService.Interfaces
         string Version { get; set; }
         string Description { get; set; }
         IMagickPackageType PackageType { get; set; }
-
-
-
+        
     }
     public interface IMagicPackageSearch
     {
         //string Id { get; set; }
-        Task SearchPackages(string path);
+        Task<IEnumerable<IMagicPackage>> SearchPackages(string path);
         Task AddPackages(IMagicPackage package);
         IList<IMagicPackage> GetPackages();
     }

@@ -29,11 +29,11 @@ namespace PackagesNpm
 
         public async Task AddPackages(IMagicPackage package) => await Task.Run(() =>
         {
-            IMagicPackage checkIfExist = _packages.Find(z => z.Name == package.Name && z.Version == package.Version);
-            if (checkIfExist == null)
-            {
+            //IMagicPackage checkIfExist = _packages.Find(z => z.Name == package.Name && z.Version == package.Version);
+            //if (checkIfExist == null)
+            //{
                 _packages.Add(package);
-            }
+            //}
 
 
         });
@@ -61,34 +61,34 @@ namespace PackagesNpm
             return Path.GetFullPath(npmCmd);
         }
 
-        public  async Task SearchPackages(string packageJsonPath)
-        {
-            dynamic o1 = JObject.Parse(File.ReadAllText(packageJsonPath));
-            IList<JToken> jsonDevDep = o1["devDependencies"];
-            if (jsonDevDep != null)
-            {
-                foreach (var jToken in jsonDevDep)
-                {
-                    var p = (JProperty)jToken;
+        public async Task<IEnumerable<IMagicPackage>> SearchPackages(string packageJsonPath) => await Task.Run(() =>
+       {
+           List<NpmPackage> temp = new List<NpmPackage>();
+           dynamic o1 = JObject.Parse(File.ReadAllText(packageJsonPath));
+           IList<JToken> jsonDevDep = o1["devDependencies"];
+           if (jsonDevDep != null)
+           {
+               foreach (var jToken in jsonDevDep)
+               {
+                   var p = (JProperty)jToken;
                     //var license = await RunNpmViewCheckLicense(p.Name, p.Value.ToString());
-                    await AddPackages(new NpmPackage { Name = p.Name, Version = p.Value.ToString(), Description = "", PackageType = IMagickPackageType.Npm });
-                }
-            }
-            IList<JToken> jsonDep = o1["dependencies"];
-            if (jsonDep != null)
-            {
-                foreach (var jToken in jsonDep)
-                {
-                    var p = (JProperty)jToken;
+                    temp.Add(new NpmPackage { Name = p.Name, Version = p.Value.ToString(), Description = "", PackageType = IMagickPackageType.Npm });
+               }
+           }
+           IList<JToken> jsonDep = o1["dependencies"];
+           if (jsonDep != null)
+           {
+               foreach (var jToken in jsonDep)
+               {
+                   var p = (JProperty)jToken;
                     //var license = await RunNpmViewCheckLicense(p.Name, p.Value.ToString());
                     //await Utils.AddToPackageInformation(new PackageInformation { PackageName = p.Name, PackageVersion = p.Value.ToString(), PackageDescription = "", OriginOfPackage = PackageInformation.Origin.Npm, FeedRegistry = NpmRegistry });
-                    await AddPackages(new NpmPackage { Name = p.Name, Version = p.Value.ToString(), Description = "", PackageType = IMagickPackageType.Npm });
-                }
+                    temp.Add(new NpmPackage { Name = p.Name, Version = p.Value.ToString(), Description = "", PackageType = IMagickPackageType.Npm });
+               }
+           }
 
+           return temp;
+       });
 
-            }
-        }
-
-  
     }
 }

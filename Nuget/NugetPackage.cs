@@ -7,7 +7,24 @@ using System.Threading.Tasks;
 
 namespace PackageMagic.Nuget
     {
-
+    
+    public abstract class ProjectBase : IMagicProject
+    {
+        public ProjectBase()
+        {
+            this.Packages = new List<IMagicPackage>();
+        }
+        public string Name { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string Path { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public List<IMagicPackage> Packages { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    }
+    public class csProject : ProjectBase
+    {
+        public csProject():base()
+        {
+            
+        }
+    }
     //public delegate void ChangedCallback(IMagicPackage package);
 
     public class NugetPackage : IMagicPackage
@@ -20,6 +37,8 @@ namespace PackageMagic.Nuget
             {
                 PackageInformation = new List<IMagicPackage>();
             }
+
+        
 
         public IPackage NugetPackageInformation { get; set; }
 
