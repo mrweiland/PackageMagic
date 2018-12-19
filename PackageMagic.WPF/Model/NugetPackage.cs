@@ -3,15 +3,46 @@ using PackageMagic.WPF.Interface;
 
 namespace PackageMagic.WPF.Model
 {
-    public class NugetPackage : ObservableObject, IMagicPackage
+    public abstract class NugetPackage : ObservableObject, IMagicPackage
     {
-        public string Id { get => _id; set => _id = value; }
+        public string Id
+        {
+            get => _id;
+            set => Set(Id, ref _id, value);
+        }
         private string _id;
 
-        public string Path { get => _path; set => _path = value; }
+        public string Path
+        {
+            get => _path;
+            set => Set(Path, ref _path, value);
+        }
         private string _path;
 
-        public PackageType Type { get => _type; set => _type = value; }
-        private PackageType _type;
+        //public PackageType Type
+        //{
+        //    get => _type;
+        //    set => Set(()=>Type, ref _type, value);
+        //}
+        //private PackageType _type;
+
+        public string IncludedInProject
+        {
+            get => _includedInProject;
+            set => Set(IncludedInProject, ref _includedInProject, value);
+        }
+        private string _includedInProject;
+    }
+
+    public class InternalNugetPackage: NugetPackage
+    {
+        //Internal Nuget packages are the ones that are read from a csproj
+        //Add any additional properties that are unique for an internal Nuget package
+    }
+
+    public class ExternalNugetPackage : NugetPackage
+    {
+        //External Nuget packages are the ones that are read from a packages.config
+        //Add any additional properties that are unique for an external Nuget package
     }
 }
