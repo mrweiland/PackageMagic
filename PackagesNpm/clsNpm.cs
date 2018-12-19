@@ -46,7 +46,7 @@ namespace PackagesNpm
                 {
                     var p = (JProperty)jToken;
                     //var license = await RunNpmViewCheckLicense(p.Name, p.Value.ToString());
-                    await clsPackages.AddToPackageInformation(new NpmPackage { Name= p.Name, Version = p.Value.ToString(), Description= "", Origin= "Npm"});
+                    await clsPackages.AddToPackageInformation(new NpmPackage { Name= p.Name, Version = p.Value.ToString(), Description= "", PackageType= IMagickPackageType.Npm});
                 }
             }
             IList<JToken> jsonDep = o1["dependencies"];
@@ -57,7 +57,7 @@ namespace PackagesNpm
                     var p = (JProperty)jToken;
                     //var license = await RunNpmViewCheckLicense(p.Name, p.Value.ToString());
                     //await Utils.AddToPackageInformation(new PackageInformation { PackageName = p.Name, PackageVersion = p.Value.ToString(), PackageDescription = "", OriginOfPackage = PackageInformation.Origin.Npm, FeedRegistry = NpmRegistry });
-                    await clsPackages.AddToPackageInformation(new NpmPackage { Name = p.Name, Version = p.Value.ToString(), Description = "", Origin = "Npm" });
+                    await clsPackages.AddToPackageInformation(new NpmPackage { Name = p.Name, Version = p.Value.ToString(), Description = "", PackageType = IMagickPackageType.Npm });
                 }
 
 

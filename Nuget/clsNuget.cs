@@ -34,7 +34,7 @@ namespace PackageMagic.Nuget
                     var pack = repo.FindPackage(package1.Id);
 
                     //AddToPackageInformation(new NugetPackage { Name = pack.Id, Version = pack.Version.ToString(), Description = pack.Description, FeedRegistry = nugetFeedSourceV2, OriginOfPackage = NugetPackage.Origin.Nuget }).GetAwaiter().GetResult();
-                    clsPackages.AddToPackageInformation(new NugetPackage { Name = pack.Id, Version = pack.Version.ToString(), Description = pack.Description, Origin = "Nuget" }).GetAwaiter().GetResult();
+                    clsPackages.AddToPackageInformation(new NugetPackage { Name = pack.Id, Version = pack.Version.ToString(), Description = pack.Description, PackageType = IMagickPackageType.Nuget }).GetAwaiter().GetResult();
                 }
             });
         }
@@ -84,7 +84,7 @@ namespace PackageMagic.Nuget
                                }
 
 
-                               await clsPackages.AddToPackageInformation(new NugetPackage { Name = node.Attributes["Include"].Value, Version = packageVersion, Description = "", Origin = "PackageReference" });
+                               await clsPackages.AddToPackageInformation(new NugetPackage { Name = node.Attributes["Include"].Value, Version = packageVersion, Description = "", PackageType = IMagickPackageType.PackageReference });
                            }
                            catch (Exception)
                            {
@@ -158,7 +158,7 @@ namespace PackageMagic.Nuget
 
                         PackageManager.Utils.LogMessages(packageReference.Id, true);
 
-                        var package = new NugetPackage { Name = packageReference.Id, Version = packageReference.Version.ToNormalizedString(), Description = foundCsProjFile, Origin = "PackageConfig" };
+                        var package = new NugetPackage { Name = packageReference.Id, Version = packageReference.Version.ToNormalizedString(), Description = foundCsProjFile, PackageType = IMagickPackageType.PackageConfig };
 
                         clsPackages.AddToPackageInformation(package).GetAwaiter().GetResult();
                     }
@@ -173,7 +173,7 @@ namespace PackageMagic.Nuget
             PackageManager.Utils.LogMessages($"Checking nuget package information from https://packages.nuget.org/api/v2");
             await Task.Run(() =>
             {
-                foreach (var item in NugetPackage.PackageInformation.FindAll(o => o.Origin == "PackageConfig" || o.Origin == "PackageReference"))
+                foreach (var item in NugetPackage.PackageInformation.FindAll(o => o.PackageType == IMagickPackageType.PackageConfig  || o.PackageType == IMagickPackageType.PackageReference))
                 {
                     pack = repo.FindPackage(item.Name, SemanticVersion.Parse(item.Version));
                     item.NugetPackageInformation = pack;

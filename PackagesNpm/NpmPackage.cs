@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace PackagesNpm
 {
-    public class NpmPackage : IPackageMagic
+    public class NpmPackage : IMagicPackage
     {
-        //public delegate void ChangedCallback(IPackageMagic package);
+        //public delegate void ChangedCallback(IMagicPackage package);
 
 
             public string Id { get; set; }
             public string Name { get; set; }
-            public string Origin { get; set; }
             public string Version { get; set; }
             public static List<NpmPackage> PackageInformation;
             static NpmPackage()
@@ -25,7 +24,12 @@ namespace PackagesNpm
 
             public string Description { get; set; }
 
+        public IMagickPackageType PackageType { get; set; }
 
+        public IEnumerable<IMagickPackageType> Packages()
+        {
+            throw new NotImplementedException();
         }
+    }
 
 }

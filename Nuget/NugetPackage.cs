@@ -6,13 +6,12 @@ using System.Collections.Generic;
     namespace PackageMagic.Nuget.interfaces
     {
 
-        //public delegate void ChangedCallback(IPackageMagic package);
+    //public delegate void ChangedCallback(IMagicPackage package);
 
-        public class NugetPackage: IPackageMagic
+    public class NugetPackage : IMagicPackage
         {
             //public string Id { get; set; }
             public string Name { get; set; }
-            public string Origin { get; set; }
             public string Version { get; set; }
             public static List<NugetPackage> PackageInformation;
             static NugetPackage()
@@ -23,8 +22,12 @@ using System.Collections.Generic;
         public IPackage NugetPackageInformation { get; set; }
 
         public string Description { get; set; }
-            
+        public IMagickPackageType PackageType { get; set; }
 
+        public IEnumerable<IMagickPackageType> Packages()
+        {
+            throw new System.NotImplementedException();
         }
+    }
 
     }

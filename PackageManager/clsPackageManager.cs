@@ -6,23 +6,29 @@ using System.Threading.Tasks;
 
 namespace PackageMagic.PackageManager
 {
-    public interface IPackageMagic
+    public interface IMagicPackage
     {
         //string Id { get; set; }
         string Name { get; set; }
         string Version { get; set; }
         string Description { get; set; }
-        string Origin { get; set; }
+        IMagickPackageType PackageType { get; set; }
+
+        IEnumerable<IMagickPackageType> Packages();
+     
+
+
+        
     }
-    
-    //public enum Origin
-    //{
-    //    Npm,
-    //    Nuget,
-    //    PackageReference,
-    //    Reference,
-    //    PackageConfig
-    //}
+
+    public enum IMagickPackageType
+    {
+        Npm,
+        Nuget,
+        PackageReference,
+        Reference,
+        PackageConfig
+    }
     //public class PackageMagic
     //{
     //}
