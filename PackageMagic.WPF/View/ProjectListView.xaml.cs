@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace PackageMagic.WPF.View
 {
     /// <summary>
-    /// Interaction logic for PackageItemView.xaml
+    /// Interaction logic for ProjectListView.xaml
     /// </summary>
-    public partial class PackageItemView : UserControl
+    public partial class ProjectListView : UserControl
     {
-        public PackageItemView()
+        public ProjectListView()
         {
             InitializeComponent();
         }

@@ -1,5 +1,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using PackageMagic.General.Interface;
+using PackageMagic.PackageService.Interface;
 using PackageMagic.WPF.Interface;
 using System;
 using System.Collections.Generic;
@@ -12,15 +14,23 @@ namespace PackageMagic.WPF.ViewModel
     public class MainViewModel : ViewModelBase
     {
         //This is our data service injected from the ViewModelLocator
-        private IMagicPackageService _packageService;
+        private IMagicProjectService _projectService;
 
         //This should be bound to the controls in the PackageListView
-        public IEnumerable<IMagicPackage> Packages
+        public IEnumerable<IMagicProject> Projects
         {
-            get => _packages;
-            set => Set(() => Packages, ref _packages, value);
+            get => _projects;
+            set => Set(() => Projects, ref _projects, value);
         }
-        private IEnumerable<IMagicPackage> _packages;
+        private IEnumerable<IMagicProject> _projects;
+
+        //This should be bound to the controls in the PackageItemView
+        public IMagicProject SelectedProject
+        {
+            get => _selectedProject;
+            set => Set(() => SelectedProject, ref _selectedProject, value);
+        }
+        private IMagicProject _selectedProject;
 
         //This should be bound to the controls in the PackageItemView
         public IMagicPackage SelectedPackage
@@ -59,7 +69,8 @@ namespace PackageMagic.WPF.ViewModel
             Busy = true;
             RefreshCommand.RaiseCanExecuteChanged();
             Status = "Refreshing";
-            Packages = await _packageService.GetPackagesAsync(@"C:\Repos");
+            _projectService.MessageCallback += UpdateStatusExternal;
+            Projects = await _projectService.GetProjectsAsync(@"C:\Repos");
 
             //Just as POC I will delay the task here to see if everything gets updated accordingly and that the application don't freeze
             await Task.Delay(2000);
@@ -69,17 +80,20 @@ namespace PackageMagic.WPF.ViewModel
             RefreshCommand.RaiseCanExecuteChanged();
         }
 
+        private void UpdateStatusExternal(string status) => Status = status;
+
         //This task property keeps track if the async Initialize has run to completion
-        public Task Initialized {
+        public Task Initialized
+        {
             get => _initialized;
-            private set=>_initialized = value;
+            private set => _initialized = value;
         }
         private Task _initialized;
 
-        public MainViewModel(IMagicPackageService packageService)
+        public MainViewModel(IMagicProjectService projectService)
         {
             //This will be automatically injected by the ViewModelLocator
-            _packageService = packageService;
+            _projectService = projectService;
 
             //This call will run async but can not be awaited in the constructor since it's not async
             //Instead it will add its task to the property Initialized that could be awaited somewhere else
@@ -94,7 +108,7 @@ namespace PackageMagic.WPF.ViewModel
 
             if (IsInDesignMode)
             {
-                SelectedPackage = Packages.FirstOrDefault();
+                SelectedProject = Projects.FirstOrDefault();
             }
         }
     }

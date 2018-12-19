@@ -1,4 +1,4 @@
-﻿using PackageMagic.PackageService.Interfaces;
+﻿using PackageMagic.PackageService.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;

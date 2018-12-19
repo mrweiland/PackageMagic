@@ -1,5 +1,5 @@
-﻿
-using PackageMagic.PackageService.Interfaces;
+﻿using PackageMagic.General.Interface;
+using PackageMagic.General.Type;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,26 +10,11 @@ namespace PackagesNpm
 {
     public class NpmPackage : IMagicPackage
     {
-        //public delegate void ChangedCallback(IMagicPackage package);
-
-
-            public string Id { get; set; }
-            public string Name { get; set; }
-            public string Version { get; set; }
-            public static List<IMagicPackage> PackageInformation;
-            static NpmPackage()
-            {
-                PackageInformation = new List<IMagicPackage>();
-            }
-
-
-            public string Description { get; set; }
-
-        public IMagickPackageType PackageType { get; set; }
-
-  
-
-
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Version { get; set; }
+        public static List<IMagicPackage> PackageInformation = new List<IMagicPackage>();
+        public string Description { get; set; }
+        public MagicPackageType PackageType { get; set; }
     }
-
 }

@@ -24,9 +24,9 @@
                 <ColumnDefinition Width="5"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <View:PackageListView Grid.Column="0"/>
+            <View:ProjectListView Grid.Column="0"/>
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-            <View:PackageItemView Grid.Column="2" Loaded="PackageItemView_Loaded" />
+            <View:ProjectItemView Grid.Column="2" />
         </Grid>
 
         <View:StatusView Grid.Row="2" Margin="5"/>
