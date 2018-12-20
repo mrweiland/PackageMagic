@@ -46,7 +46,6 @@
     <Compile Include="Interface\IMagicProjectService.cs" />
     <Compile Include="Model\MagicProject.cs" />
     <Compile Include="Service\MagicProjectService.cs" />
-    <Compile Include="Packages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
