@@ -1,5 +1,6 @@
 ﻿using PackageMagic.Nuget;
-
+using PackageMagic.PackageService.Interface;
+using PackageMagic.PackageService.Service;
 using PackagesNpm;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace ConsoleRunner
 {
     class Program
     {
+        
         static void Main(string[] args)
         {
             Runner().GetAwaiter().GetResult();
@@ -18,27 +20,22 @@ namespace ConsoleRunner
 
          static async Task Runner()
         {
-            List<Task> t = new List<Task>();
-            var _projectDirectory = @"c:\git\tobias";
+            MagicProjectService _projectService = new MagicProjectService();
+
             //clsPackages.Callback += CallbackFromPackage;
             //PackageService.GetPackages(IMagickPackageType.Npm, Packa)
 
-            var nuget = new Nuget();
-            var npm = new Npm();
-            var x = await nuget.SearchPackages(_projectDirectory);
-            var y = await npm.SearchPackages(@"C:\git\tobias\package.json");
+            var Projects = await _projectService.GetProjectsAsync(@"C:\git\tobias");
 
-
-
-            foreach (var item in x)
+            foreach (var project in Projects)
             {
-                Console.WriteLine(item.Name);
+                Console.WriteLine($"{project.Name}");
+                foreach (var package in project.Packages)
+                {
+                    Console.WriteLine($"- {package.Name}");
+                }
             }
-            foreach (var item in y)
-            {
-                Console.WriteLine(item.Name);
-            }
-            Console.WriteLine($"NPM {y.Count()} Nuget {x.Count()} ");
+            Console.WriteLine(Projects.Count());
             Console.ReadLine();
         }
     }
