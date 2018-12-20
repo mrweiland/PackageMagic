@@ -65,7 +65,7 @@ namespace PackageMagic.Nuget
         /// </summary>
         /// <param name="projectDirectory">The project directory.</param>
         /// <returns></returns>
-        private async Task<IEnumerable<IMagicPackage>> AddFromCsProj(string projectFile)
+        private async Task<IEnumerable<IMagicPackage>> AddFromCsProj(string projectFile) => await Task.Run(() =>
         {
             List<NugetPackage> result = new List<NugetPackage>();
             XmlDocument xDoc = new XmlDocument();
@@ -86,21 +86,34 @@ namespace PackageMagic.Nuget
                     var nodes = xDoc.GetElementsByTagName("Reference");
                     foreach (XmlNode node in nodes)
                     {
+                        string packageVersion;
                         if (node.Attributes != null && node.Attributes.Count > 0)
                         {
                             string packageName = node.Attributes["Include"] == null ? "" : node.Attributes["Include"].Value;
-                            string packageVersion = node.Attributes["Version"] == null ? "" : node.Attributes["Version"].Value;
-                            if (string.IsNullOrEmpty(packageVersion))
+                            //Castle.Core, Version = 4.0.0.0, Culture = neutral, PublicKeyToken = 407dd0808d44fbdc, processorArchitecture = MSIL
+                            
+                            if (packageName.Split(new char[] { ',' }).Count() > 1)
                             {
-                                var versionNode = node.SelectSingleNode("Version") ?? null;
-                                if (versionNode != null)
-                                {
-                                    packageVersion = versionNode.Value ?? "";
-                                }
+                                string[] temp = packageName.Split(new char[] { ',' });
+                                packageName = temp[0];
+                                packageVersion = temp[1].Split(new char[] { '=' })[1];
+                            } else { 
+
+                            
+
+                            if (node.Attributes["Version"] == null)
+                            {
+                                    packageVersion = node.Attributes["version"] == null ? "" : node.Attributes["Version"].Value;
+                            }
+                            else
+                            {
+                                    //Console.WriteLine(node.Attributes["Version"].Value);
+                                    packageVersion = node.Attributes["Version"] == null ? "" : node.Attributes["Version"].Value;
                             }
 
                             packageVersion = string.IsNullOrEmpty(packageVersion) ? targetFrameworkVersion : packageVersion;
 
+                            }
                             result.Add(new NugetPackage { Name = packageName, Version = packageVersion, Description = "", PackageType = MagicPackageType.Reference });
                         }
                     }
@@ -120,7 +133,7 @@ namespace PackageMagic.Nuget
                             else
                             {
                                 var versionNodes = node.SelectNodes("Version");
-                                if (versionNodes != null&& versionNodes.Count>0)
+                                if (versionNodes != null && versionNodes.Count > 0)
                                 {
                                     packageVersion = versionNodes[0].Value;
                                 }
@@ -132,7 +145,7 @@ namespace PackageMagic.Nuget
             }
 
             return result;
-        }
+        });
 
         private static string GetFrameworkVersion(XmlDocument xDoc)
         {
@@ -146,14 +159,14 @@ namespace PackageMagic.Nuget
 
         private bool IsNetCore(XmlDocument xDoc)
         {
-            XmlElement root = xDoc.DocumentElement;
-            if (root.Attributes != null && root.Attributes.Count > 0)
-            {
-                if (root.Attributes["Sdk"] != null && root.Attributes["Sdk"].Value == "Microsoft.NET.Sdk")
-                    return true;
-                if (root.Attributes["Sdk"] != null && root.Attributes["Sdk"].Value == "Microsoft.NET.Sdk.Web")
-                    return true;
-            }
+            //XmlElement root = xDoc.DocumentElement;
+            //if (root.Attributes != null && root.Attributes.Count > 0)
+            //{
+            //    if (root.Attributes["Sdk"] != null && root.Attributes["Sdk"].Value == "Microsoft.NET.Sdk")
+            //        return true;
+            //    if (root.Attributes["Sdk"] != null && root.Attributes["Sdk"].Value == "Microsoft.NET.Sdk.Web")
+            //        return true;
+            //}
             return false;
         }
 
