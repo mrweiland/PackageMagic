@@ -1,7 +1,6 @@
-﻿using PackageMagic.General.Type;
-using PackageMagic.PackageService.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using PackageMagic.General.Type;
 
 namespace PackageMagic.PackageService.Interface
 {
