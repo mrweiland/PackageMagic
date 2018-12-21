@@ -83,7 +83,6 @@
     <Compile Include="Service\MagicProjectService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Type\FrameworkKind.cs" />
-    <Compile Include="Type\NpmProjParser.cs" />
     <Compile Include="Type\ProjectKind.cs" />
   </ItemGroup>
   <ItemGroup>
