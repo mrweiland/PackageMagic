@@ -11,29 +11,14 @@ using System.Threading.Tasks;
 
 namespace PackageMagic.PackageService.Model
 {
-    public class MagicProjectCs : MagicProjectBase
-    {
-        //Add anything special for this type of project
-        public async Task Parse() => await Task.Run(() =>
-        {
-            var parser = CsProjParser.Parse(Path);
-            FrameworkVersion = parser.FrameworkVersion;
-            ProjectType = parser.ProjectType;
-            Packages.AddRange(parser.Packages);
-        });
-    }
-
-    public class MagicProjectVb : MagicProjectBase
-    {
-        //Add anything special for this type of project
-    }
-
     public abstract class MagicProjectBase : IMagicProject
     {
         public string Name { get; set; }
         public string Path { get; set; }
         public string FrameworkVersion { get; set; }
-        public ProjectType ProjectType { get; set; }
+        public FrameworkKind ProjectType { get; set; }
         public List<IMagicPackage> Packages { get; set; } = new List<IMagicPackage>();
+
+        public abstract Task ParseAsync();
     }
 }

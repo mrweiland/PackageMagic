@@ -1,6 +1,6 @@
 ﻿namespace PackageMagic.PackageService.Type
 {
-    public enum ProjectType
+    public enum FrameworkKind
     {
         DOTNET,
         DOTNETCORE

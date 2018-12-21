@@ -18,24 +18,40 @@ namespace PackageMagic.PackageService.Service
     {
         public MessageDelegate MessageCallback { get; set; }
 
-        public async Task<IEnumerable<IMagicProject>> GetProjectsAsync(string pathToSearch)
+        public async Task<IEnumerable<IMagicProject>> GetProjectsAsync(string pathToSearch, ProjectKind projectKind)
         {
             List<IMagicProject> listProjects = new List<IMagicProject>();
+
+            if (projectKind == ProjectKind.CSharp)
+            {
+                listProjects.AddRange(await PopulateWithCSharpProjects(pathToSearch));
+            }
+
+            if (projectKind == ProjectKind.VisualBasic)
+            {
+            }
+
+            return listProjects;
+        }
+
+        private async Task<IEnumerable<IMagicProject>> PopulateWithCSharpProjects(string pathToSearch)
+        {
+            List<IMagicProject> result = new List<IMagicProject>();
 
             string[] projectFiles = Directory.GetFiles(pathToSearch, "*.csproj", SearchOption.AllDirectories);
             foreach (var csProjFile in projectFiles)
             {
                 MessageCallback?.Invoke($"Parsing {csProjFile}");
 
-                var project = new MagicProjectCs { Name = Path.GetFileName(csProjFile), Path = csProjFile };
-                await project.Parse();
+                var project = new MagicProjectCs(csProjFile);
+                await project.ParseAsync();
 
                 //TODO! Bad naming convention forces the use of full namespace
                 //Consider using different namespace and class name for 'Nuget'
                 IMagicPackageSearch theSearcher = new Nuget.Nuget();
                 theSearcher.MessageCallback += MessageCallback;
 
-                //Use the nuget object for parsing nuget package references
+                //Use the nuget object for parsing nuget package references from packages.config
                 project.Packages.AddRange(await theSearcher.SearchPackages(project.Path));
                 theSearcher.MessageCallback -= MessageCallback;
 
@@ -47,10 +63,10 @@ namespace PackageMagic.PackageService.Service
                 //project.Packages.AddRange(await theSearcher.SearchPackages(project.Path));
                 //theSearcher.MessageCallback -= MessageCallback;
 
-                listProjects.Add(project);
+                result.Add(project);
             }
 
-            return listProjects;
+            return result;
         }
     }
 }

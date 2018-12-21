@@ -2,6 +2,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using PackageMagic.General.Interface;
 using PackageMagic.PackageService.Interface;
+using PackageMagic.PackageService.Type;
 using PackageMagic.WPF.Interface;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace PackageMagic.WPF.ViewModel
     public class MainViewModel : ViewModelBase
     {
         //This is our data service injected from the ViewModelLocator
-        private IMagicProjectService _projectService;
+        private readonly IMagicProjectService _projectService;
 
         //This should be bound to the controls in the PackageListView
         public IEnumerable<IMagicProject> Projects
@@ -90,7 +91,7 @@ namespace PackageMagic.WPF.ViewModel
             RefreshCommand.RaiseCanExecuteChanged();
             Status = "Refreshing";
             _projectService.MessageCallback += UpdateStatusExternal;
-            Projects = await _projectService.GetProjectsAsync(@"C:\Repos");
+            Projects = await _projectService.GetProjectsAsync(@"C:\Repos", ProjectKind.CSharp);
 
             //Just as POC I will delay the task here to see if everything gets updated accordingly and that the application don't freeze
             await Task.Delay(2000);
