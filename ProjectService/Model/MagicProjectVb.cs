@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace PackageMagic.PackageService.Model
+namespace PackageMagic.ProjectService.Model
 {
     public class MagicProjectVb : MagicProjectBase
     {

@@ -14,8 +14,8 @@
 using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
-using PackageMagic.PackageService.Interface;
-using PackageMagic.PackageService.Service;
+using PackageMagic.ProjectService.Interface;
+using PackageMagic.ProjectService.Service;
 using PackageMagic.WPF.Design;
 using PackageMagic.WPF.Interface;
 using PackageMagic.WPF.Service;

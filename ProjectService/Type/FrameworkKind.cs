@@ -1,4 +1,4 @@
-﻿namespace PackageMagic.PackageService.Type
+﻿namespace PackageMagic.ProjectService.Type
 {
     public enum FrameworkKind
     {

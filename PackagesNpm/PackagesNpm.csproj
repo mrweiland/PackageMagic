@@ -7,8 +7,8 @@
     <ProjectGuid>{7E7BD2CB-493F-45DA-B23D-C8D79CB60F5B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PackagesNpm</RootNamespace>
-    <AssemblyName>PackagesNpm</AssemblyName>
+    <RootNamespace>PackageMagic.Npm</RootNamespace>
+    <AssemblyName>PackageMagic.Npm</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

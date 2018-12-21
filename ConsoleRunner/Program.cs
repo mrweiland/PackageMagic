@@ -1,7 +1,7 @@
 ﻿using PackageMagic.Nuget;
-using PackageMagic.PackageService.Interface;
-using PackageMagic.PackageService.Service;
-using PackageMagic.PackageService.Type;
+using PackageMagic.ProjectService.Interface;
+using PackageMagic.ProjectService.Service;
+using PackageMagic.ProjectService.Type;
 using PackagesNpm;
 using System;
 using System.Collections.Generic;

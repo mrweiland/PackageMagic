@@ -1,8 +1,8 @@
 ﻿using PackageMagic.General.Interface;
-using PackageMagic.PackageService.Type;
+using PackageMagic.ProjectService.Type;
 using System.Collections.Generic;
 
-namespace PackageMagic.PackageService.Interface
+namespace PackageMagic.ProjectService.Interface
 {
     public interface IMagicProject
     {

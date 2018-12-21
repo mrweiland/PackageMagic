@@ -1,9 +1,9 @@
 ﻿using PackageMagic.General.Interface;
 using PackageMagic.General.Type;
 using PackageMagic.Nuget;
-using PackageMagic.PackageService.Interface;
-using PackageMagic.PackageService.Model;
-using PackageMagic.PackageService.Type;
+using PackageMagic.ProjectService.Interface;
+using PackageMagic.ProjectService.Model;
+using PackageMagic.ProjectService.Type;
 using PackagesNpm;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PackageMagic.PackageService.Service
+namespace PackageMagic.ProjectService.Service
 {
     public class MagicProjectService : IMagicProjectService
     {
