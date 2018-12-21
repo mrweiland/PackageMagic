@@ -3,6 +3,7 @@ using PackageMagic.General.Type;
 using PackageMagic.Nuget;
 using PackageMagic.PackageService.Interface;
 using PackageMagic.PackageService.Model;
+using PackageMagic.PackageService.Type;
 using PackagesNpm;
 using System;
 using System.Collections.Generic;
@@ -25,8 +26,10 @@ namespace PackageMagic.PackageService.Service
             foreach (var csProjFile in projectFiles)
             {
                 MessageCallback?.Invoke($"Parsing {csProjFile}");
+
                 var project = new MagicProjectCs { Name = Path.GetFileName(csProjFile), Path = csProjFile };
-                
+                await project.Parse();
+
                 //TODO! Bad naming convention forces the use of full namespace
                 //Consider using different namespace and class name for 'Nuget'
                 IMagicPackageSearch theSearcher = new Nuget.Nuget();

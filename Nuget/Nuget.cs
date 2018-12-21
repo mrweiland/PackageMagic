@@ -29,7 +29,7 @@ namespace PackageMagic.Nuget
         {
             List<IMagicPackage> result = new List<IMagicPackage>();
 
-            result.AddRange(await AddFromCsProj(path));
+            //result.AddRange(await AddFromCsProj(path));
             result.AddRange(await AddFromPackagesConfig(path));
 
             return result;
