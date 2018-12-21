@@ -18,51 +18,68 @@ namespace PackageMagic.PackageService.Service
     {
         public MessageDelegate MessageCallback { get; set; }
 
-        public async Task<IEnumerable<IMagicProject>> GetProjectsAsync(string pathToSearch)
+        public async Task<IEnumerable<IMagicProject>> GetProjectsAsync(string pathToSearch, ProjectKind projectKind)
         {
             List<IMagicProject> listProjects = new List<IMagicProject>();
 
-            string[] projectFiles = Directory.GetFiles(pathToSearch, "*.csproj", SearchOption.AllDirectories);
-
-            string[] projectFilesNpm = Directory.GetFiles(pathToSearch, "package.json", SearchOption.AllDirectories);
-            foreach (var packageJson in projectFilesNpm)
+            if (projectKind == ProjectKind.CSharp)
             {
-                Console.WriteLine(packageJson);
-                var project = new MagicProjectNpm { Name = Path.GetDirectoryName(packageJson), Path = packageJson };
-                await project.Parse();
-                IMagicPackageSearch theSearcher = new Npm();
-                project.Packages.AddRange(await theSearcher.SearchPackages(project.Path));
-                listProjects.Add(project);
+                listProjects.AddRange(await PopulateWithCSharpProjects(pathToSearch));
             }
+
+            if (projectKind == ProjectKind.VisualBasic)
+            {
+            }
+
+            if (projectKind == ProjectKind.Npm)
+            {
+                listProjects.AddRange(await PopulateWithNpmProjects(pathToSearch));
+            }
+
+            return listProjects;
+        }
+
+        private async Task<IEnumerable<IMagicProject>> PopulateWithCSharpProjects(string pathToSearch)
+        {
+            List<IMagicProject> result = new List<IMagicProject>();
+
+            string[] projectFiles = Directory.GetFiles(pathToSearch, "*.csproj", SearchOption.AllDirectories);
             foreach (var csProjFile in projectFiles)
             {
                 MessageCallback?.Invoke($"Parsing {csProjFile}");
 
-                var project = new MagicProjectCs { Name = Path.GetFileName(csProjFile), Path = csProjFile };
-                await project.Parse();
+                var project = new MagicProjectCs(csProjFile);
+                await project.ParseAsync();
 
                 //TODO! Bad naming convention forces the use of full namespace
-                //Consider using different namespace and class name for 'Nuget'
+                //TODO! Don't do anything about this, I will fix so we have same pattern for all package types. /Lennart
+                //TODO! It should work temporary as it is right now
+                //but consider using different namespace and class name for 'Nuget' and refactor to same as MagicProjectCs and MagicProjectNpm 
                 IMagicPackageSearch theSearcher = new Nuget.Nuget();
                 theSearcher.MessageCallback += MessageCallback;
-
-                //Use the nuget object for parsing nuget package references
+                //Use the nuget object for parsing nuget package references from packages.config
                 project.Packages.AddRange(await theSearcher.SearchPackages(project.Path));
                 theSearcher.MessageCallback -= MessageCallback;
-
-                //TODO! Follow same naming conventions on namespaces and classnames in both Nuget and Npm library!
-                //theSearcher = new Npm();
-                //theSearcher.MessageCallback += MessageCallback;
-
-                //Use the npm object for parsing npm package references
-                //project.Packages.AddRange(await theSearcher.SearchPackages(project.Path));
-                //theSearcher.MessageCallback -= MessageCallback;
-
-                listProjects.Add(project);
+                result.Add(project);
             }
 
+            return result;
+        }
 
-            return listProjects;
+        private async Task<IEnumerable<IMagicProject>> PopulateWithNpmProjects(string pathToSearch)
+        {
+            List<IMagicProject> result = new List<IMagicProject>();
+
+            string[] projectFilesNpm = Directory.GetFiles(pathToSearch, "package.json", SearchOption.AllDirectories);
+            foreach (var packageJson in projectFilesNpm)
+            {
+                MessageCallback?.Invoke($"Parsing {packageJson}");
+
+                var project = new MagicProjectNpm(packageJson);
+                await project.ParseAsync();
+            }
+
+            return result;
         }
     }
 }

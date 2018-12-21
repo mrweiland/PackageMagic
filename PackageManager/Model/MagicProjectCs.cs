@@ -1,62 +1,56 @@
-﻿using System;
+﻿using PackageMagic.General.Interface;
+using PackageMagic.General.Type;
+using PackageMagic.Nuget;
+using PackageMagic.PackageService.Interface;
+using PackageMagic.PackageService.Type;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-using PackageMagic.General.Interface;
-using PackageMagic.General.Type;
 
-namespace PackageMagic.PackageService.Type
+namespace PackageMagic.PackageService.Model
 {
-
-    public class CsProjParser
+    public class MagicProjectCs : MagicProjectBase
     {
-        public string Name { get; set; }
-        public string Path { get; set; }
-        public string FrameworkVersion { get; set; }
-        public ProjectType ProjectType { get; set; }
-        public List<IMagicPackage> Packages { get; set; }
+        public MagicProjectCs(string path)
+        {
+            Path = path;
+            Name = System.IO.Path.GetFileName(path);
+        }
 
-        public static CsProjParser Parse(string path)
+        public override async Task ParseAsync() => await Task.Run(() =>
         {
             XDocument document = null;
 
-            using (XmlTextReader tr = new XmlTextReader(path))
+            using (XmlTextReader tr = new XmlTextReader(Path))
             {
                 tr.Namespaces = false;
                 document = XDocument.Load(tr);
             }
 
-            CsProjParser result = new CsProjParser();
-            result.Name = System.IO.Path.GetFileName(path);
-            result.Path = path;
+            ProjectType = GetProjectType(document);
 
-            result.ProjectType = result.GetProjectType(document);
-
-            if (result.ProjectType == ProjectType.DOTNET)
+            if (ProjectType == FrameworkKind.DOTNET)
             {
-                result.FrameworkVersion = result.GetFrameworkVersion(document);
-                result.Packages = result.GetReferences(document);
-                result.Packages.AddRange(result.GetNugetReferences(document));
+                FrameworkVersion = GetFrameworkVersion(document);
+                Packages = GetReferences(document);
+                Packages.AddRange(GetNugetReferences(document));
             }
             else
             {
-                result.FrameworkVersion = result.GetFrameworkVersionCore(document);
-                result.Packages = result.GetReferences(document);
-                result.Packages.AddRange(result.GetNugetReferencesCore(document));
+                FrameworkVersion = GetFrameworkVersionCore(document);
+                Packages = GetReferences(document);
+                Packages.AddRange(GetNugetReferencesCore(document));
             }
+        });
 
-            return result;
-        }
-
-        private ProjectType GetProjectType(XDocument document)
+        private FrameworkKind GetProjectType(XDocument document)
         {
             if (document.Root.Attribute("ToolsVersion") != null)
-                return ProjectType.DOTNET;
+                return FrameworkKind.DOTNET;
             else
-                return ProjectType.DOTNETCORE;
+                return FrameworkKind.DOTNETCORE;
         }
 
         private string GetFrameworkVersion(XDocument document)
@@ -76,7 +70,7 @@ namespace PackageMagic.PackageService.Type
             List<IMagicPackage> result = new List<IMagicPackage>();
             foreach (XElement reference in document.Descendants("Reference"))
             {
-                result.Add(new BasicPackage { Name = reference.Attribute("Include").Value, Version = FrameworkVersion, PackageType = MagicPackageType.Reference });
+                result.Add(new BasicPackage { Name = reference.Attribute("Include").Value, Version = FrameworkVersion, PackageType = PackageKind.Reference });
             }
             return result;
         }
@@ -88,7 +82,7 @@ namespace PackageMagic.PackageService.Type
             {
                 XElement versionNode = reference.Descendants("Version").FirstOrDefault();
                 string version = versionNode == null ? "" : versionNode.Value;
-                result.Add(new BasicPackage { Name = reference.Attribute("Include").Value, Version = version, PackageType = MagicPackageType.PackageReference });
+                result.Add(new NugetPackage { Name = reference.Attribute("Include").Value, Version = version, PackageType = PackageKind.PackageReference });
             }
             return result;
         }
@@ -98,7 +92,7 @@ namespace PackageMagic.PackageService.Type
             List<IMagicPackage> result = new List<IMagicPackage>();
             foreach (XElement reference in document.Descendants("PackageReference"))
             {
-                result.Add(new BasicPackage { Name = reference.Attribute("Include").Value, Version = reference.Attribute("Version").Value, PackageType = MagicPackageType.PackageReference });
+                result.Add(new NugetPackage { Name = reference.Attribute("Include").Value, Version = reference.Attribute("Version").Value, PackageType = PackageKind.PackageReference });
             }
             return result;
         }

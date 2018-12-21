@@ -1,6 +1,6 @@
 ﻿namespace PackageMagic.General.Type
 {
-    public enum MagicPackageType
+    public enum PackageKind
     {
         Npm,
         Nuget,

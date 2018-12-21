@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PackageMagic.PackageService
+namespace PackageMagic.PackageService.Type
 {
-    interface IMagicPackage
+    public enum ProjectKind
     {
+        VisualBasic,
+        CSharp,
+        Npm
     }
 }

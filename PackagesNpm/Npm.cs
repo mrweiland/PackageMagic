@@ -38,7 +38,7 @@ namespace PackagesNpm
                 {
                     var p = (JProperty)jToken;
                     //var license = await RunNpmViewCheckLicense(p.Name, p.Value.ToString());
-                    temp.Add(new NpmPackage { Name = p.Name, Version = p.Value.ToString(), Description = "", PackageType = MagicPackageType.Npm });
+                    temp.Add(new NpmPackage { Name = p.Name, Version = p.Value.ToString(), Description = "", PackageType = PackageKind.Npm });
                 }
             }
 
@@ -50,7 +50,7 @@ namespace PackagesNpm
                     var p = (JProperty)jToken;
                     //var license = await RunNpmViewCheckLicense(p.Name, p.Value.ToString());
                     //await Utils.AddToPackageInformation(new PackageInformation { PackageName = p.Name, PackageVersion = p.Value.ToString(), PackageDescription = "", OriginOfPackage = PackageInformation.Origin.Npm, FeedRegistry = NpmRegistry });
-                    temp.Add(new NpmPackage { Name = p.Name, Version = p.Value.ToString(), Description = "", PackageType = MagicPackageType.Npm });
+                    temp.Add(new NpmPackage { Name = p.Name, Version = p.Value.ToString(), Description = "", PackageType = PackageKind.Npm });
                 }
             }
 

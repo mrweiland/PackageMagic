@@ -52,7 +52,7 @@ namespace PackageMagic.Nuget
 
                 foreach (PackageReference packageReference in file.GetPackageReferences())
                 {
-                    var package = new NugetPackage { Name = packageReference.Id, Version = packageReference.Version.ToNormalizedString(), Description = projectFile, PackageType = MagicPackageType.PackageConfig };
+                    var package = new NugetPackage { Name = packageReference.Id, Version = packageReference.Version.ToNormalizedString(), Description = projectFile, PackageType = PackageKind.PackageConfig };
                     result.Add(package);
                 }
             }
@@ -114,7 +114,7 @@ namespace PackageMagic.Nuget
                             packageVersion = string.IsNullOrEmpty(packageVersion) ? targetFrameworkVersion : packageVersion;
 
                             }
-                            result.Add(new NugetPackage { Name = packageName, Version = packageVersion, Description = "", PackageType = MagicPackageType.Reference });
+                            result.Add(new NugetPackage { Name = packageName, Version = packageVersion, Description = "", PackageType = PackageKind.Reference });
                         }
                     }
 
@@ -138,7 +138,7 @@ namespace PackageMagic.Nuget
                                     packageVersion = versionNodes[0].Value;
                                 }
                             }
-                            result.Add(new NugetPackage { Name = packageName, Version = packageVersion, Description = "", PackageType = MagicPackageType.PackageReference });
+                            result.Add(new NugetPackage { Name = packageName, Version = packageVersion, Description = "", PackageType = PackageKind.PackageReference });
                         }
                     }
                 }
@@ -229,7 +229,7 @@ namespace PackageMagic.Nuget
                                 Debug.WriteLine(node.Attributes["Version"].Value);
                                 packageVersion = node.Attributes["Version"].Value;
                             }
-                            result.Add(new NugetPackage { Name = node.Attributes["Include"].Value, Version = packageVersion, Description = "", PackageType = MagicPackageType.PackageReference });
+                            result.Add(new NugetPackage { Name = node.Attributes["Include"].Value, Version = packageVersion, Description = "", PackageType = PackageKind.PackageReference });
                             //await AddPackages(package);
                         }
                         catch (Exception)

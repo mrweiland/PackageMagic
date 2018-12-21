@@ -76,12 +76,15 @@
   <ItemGroup>
     <Compile Include="Interface\IMagicProject.cs" />
     <Compile Include="Interface\IMagicProjectService.cs" />
-    <Compile Include="Model\MagicProject.cs" />
-    <Compile Include="Type\CsProjParser.cs" />
+    <Compile Include="Model\MagicProjectBase.cs" />
+    <Compile Include="Model\MagicProjectCs.cs" />
+    <Compile Include="Model\MagicProjectNpm.cs" />
+    <Compile Include="Model\MagicProjectVb.cs" />
     <Compile Include="Service\MagicProjectService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Type\FrameworkKind.cs" />
     <Compile Include="Type\NpmProjParser.cs" />
-    <Compile Include="Type\ProjectType.cs" />
+    <Compile Include="Type\ProjectKind.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Nuget\PackagesNuget.csproj">

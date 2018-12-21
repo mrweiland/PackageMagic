@@ -1,6 +1,7 @@
 ﻿using PackageMagic.Nuget;
 using PackageMagic.PackageService.Interface;
 using PackageMagic.PackageService.Service;
+using PackageMagic.PackageService.Type;
 using PackagesNpm;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace ConsoleRunner
             //clsPackages.Callback += CallbackFromPackage;
             //PackageService.GetPackages(IMagickPackageType.Npm, Packa)
 
-            var Projects = await _projectService.GetProjectsAsync(@"C:\git\tobias");
+            var Projects = await _projectService.GetProjectsAsync(@"C:\git\tobias", ProjectKind.CSharp);
 
             foreach (var project in Projects)
             {

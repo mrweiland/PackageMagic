@@ -42,7 +42,7 @@ namespace PackageMagic.PackageService.Type
                 foreach (var jToken in jsonDevDep)
                 {
                     var p = (JProperty)jToken;
-                    result.Add(new BasicPackage { Name = p.Name, Version = p.Value.ToString(), Description = "", PackageType = MagicPackageType.Npm });
+                    result.Add(new BasicPackage { Name = p.Name, Version = p.Value.ToString(), Description = "", PackageType = PackageKind.Npm });
                 }
             }
 
@@ -58,7 +58,7 @@ namespace PackageMagic.PackageService.Type
                 foreach (var jToken in jsonDevDep)
                 {
                     var p = (JProperty)jToken;
-                    result.Add(new BasicPackage { Name = p.Name, Version = p.Value.ToString(), Description = "", PackageType = MagicPackageType.Npm });
+                    result.Add(new BasicPackage { Name = p.Name, Version = p.Value.ToString(), Description = "", PackageType = PackageKind.Npm });
                 }
             }
 

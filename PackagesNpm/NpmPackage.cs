@@ -15,6 +15,6 @@ namespace PackagesNpm
         public string Version { get; set; }
         public static List<IMagicPackage> PackageInformation = new List<IMagicPackage>();
         public string Description { get; set; }
-        public MagicPackageType PackageType { get; set; }
+        public PackageKind PackageType { get; set; }
     }
 }

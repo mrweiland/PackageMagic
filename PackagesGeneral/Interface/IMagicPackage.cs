@@ -7,6 +7,6 @@ namespace PackageMagic.General.Interface
         string Name { get; set; }
         string Version { get; set; }
         string Description { get; set; }
-        MagicPackageType PackageType { get; set; }
+        PackageKind PackageType { get; set; }
     }
 }

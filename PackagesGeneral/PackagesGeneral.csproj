@@ -46,7 +46,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Type\BasicPackage.cs" />
     <Compile Include="Type\Delegates.cs" />
-    <Compile Include="Type\MagickPackageType.cs" />
+    <Compile Include="Type\PackageKind.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
