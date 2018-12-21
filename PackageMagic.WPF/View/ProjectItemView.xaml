@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:PackageMagic.WPF.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
+
     <ListView ItemsSource="{Binding SelectedProject.Packages}" SelectedItem="{Binding SelectedPackage}">
         <ListView.View>
             <GridView>
@@ -17,5 +17,4 @@
             </GridView>
         </ListView.View>
     </ListView>
-
 </UserControl>

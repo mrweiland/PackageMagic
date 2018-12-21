@@ -11,9 +11,9 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="54"/>
+            <RowDefinition Height="46"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="54"/>
+            <RowDefinition Height="46"/>
         </Grid.RowDefinitions>
 
         <View:ToolbarView Grid.Row="0" Margin="5"/>
