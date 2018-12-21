@@ -9,6 +9,7 @@ namespace PackageMagic.PackageService.Type
     public enum ProjectKind
     {
         VisualBasic,
-        CSharp
+        CSharp,
+        Npm
     }
 }

@@ -24,10 +24,10 @@ namespace PackageMagic.WPF.Design
                     FrameworkVersion = "v4.7",
                     Packages = new List<IMagicPackage>
                         {
-                            new BasicPackage { Name = "System", PackageType=MagicPackageType.Reference},
-                            new NugetPackage { Name = "GalaSoft.MvvmLight", PackageType=MagicPackageType.PackageReference},
-                            new NugetPackage { Name = "NewtonSoft.Json",PackageType=MagicPackageType.PackageConfig},
-                            new NpmPackage { Name = "AnyNpm",PackageType=MagicPackageType.Npm}
+                            new BasicPackage { Name = "System", PackageType=PackageKind.Reference},
+                            new NugetPackage { Name = "GalaSoft.MvvmLight", PackageType=PackageKind.PackageReference},
+                            new NugetPackage { Name = "NewtonSoft.Json",PackageType=PackageKind.PackageConfig},
+                            new NpmPackage { Name = "AnyNpm",PackageType=PackageKind.Npm}
                         }
                 },
                 new MagicProjectCs(@"C:\SomePath\Sample2.csproj")
@@ -36,10 +36,10 @@ namespace PackageMagic.WPF.Design
                     FrameworkVersion = "v4.7",
                     Packages = new List<IMagicPackage>
                         {
-                            new BasicPackage { Name = "System", PackageType=MagicPackageType.Reference},
-                            new NugetPackage { Name = "GalaSoft.MvvmLight", PackageType=MagicPackageType.PackageReference},
-                            new NugetPackage { Name = "NewtonSoft.Json",PackageType=MagicPackageType.PackageConfig},
-                            new NpmPackage { Name = "AnyNpm",PackageType=MagicPackageType.Npm}
+                            new BasicPackage { Name = "System", PackageType=PackageKind.Reference},
+                            new NugetPackage { Name = "GalaSoft.MvvmLight", PackageType=PackageKind.PackageReference},
+                            new NugetPackage { Name = "NewtonSoft.Json",PackageType=PackageKind.PackageConfig},
+                            new NpmPackage { Name = "AnyNpm",PackageType=PackageKind.Npm}
                         }
                 }
             };

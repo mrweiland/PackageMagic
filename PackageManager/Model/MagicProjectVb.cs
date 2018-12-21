@@ -9,8 +9,12 @@ namespace PackageMagic.PackageService.Model
             Path = path;
             Name = System.IO.Path.GetFileName(path);
         }
-        
+
         //Add anything special for this type of project
-        public override async Task ParseAsync() => throw new System.NotImplementedException();
+        public override async Task ParseAsync() => await Task.Run(() =>
+        {
+            //TODO! Add content for this
+            throw new System.NotImplementedException();
+        });
     }
 }

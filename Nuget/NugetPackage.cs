@@ -13,6 +13,6 @@ namespace PackageMagic.Nuget
         public static List<IMagicPackage> PackageInformation = new List<IMagicPackage>();
         public IPackage NugetPackageInformation { get; set; }
         public string Description { get; set; }
-        public MagicPackageType PackageType { get; set; }
+        public PackageKind PackageType { get; set; }
     }
 }

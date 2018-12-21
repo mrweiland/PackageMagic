@@ -70,7 +70,7 @@ namespace PackageMagic.PackageService.Model
             List<IMagicPackage> result = new List<IMagicPackage>();
             foreach (XElement reference in document.Descendants("Reference"))
             {
-                result.Add(new BasicPackage { Name = reference.Attribute("Include").Value, Version = FrameworkVersion, PackageType = MagicPackageType.Reference });
+                result.Add(new BasicPackage { Name = reference.Attribute("Include").Value, Version = FrameworkVersion, PackageType = PackageKind.Reference });
             }
             return result;
         }
@@ -82,7 +82,7 @@ namespace PackageMagic.PackageService.Model
             {
                 XElement versionNode = reference.Descendants("Version").FirstOrDefault();
                 string version = versionNode == null ? "" : versionNode.Value;
-                result.Add(new NugetPackage { Name = reference.Attribute("Include").Value, Version = version, PackageType = MagicPackageType.PackageReference });
+                result.Add(new NugetPackage { Name = reference.Attribute("Include").Value, Version = version, PackageType = PackageKind.PackageReference });
             }
             return result;
         }
@@ -92,7 +92,7 @@ namespace PackageMagic.PackageService.Model
             List<IMagicPackage> result = new List<IMagicPackage>();
             foreach (XElement reference in document.Descendants("PackageReference"))
             {
-                result.Add(new NugetPackage { Name = reference.Attribute("Include").Value, Version = reference.Attribute("Version").Value, PackageType = MagicPackageType.PackageReference });
+                result.Add(new NugetPackage { Name = reference.Attribute("Include").Value, Version = reference.Attribute("Version").Value, PackageType = PackageKind.PackageReference });
             }
             return result;
         }
