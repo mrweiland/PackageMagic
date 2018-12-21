@@ -28,7 +28,11 @@ namespace PackageMagic.WPF.ViewModel
         public IMagicProject SelectedProject
         {
             get => _selectedProject;
-            set => Set(() => SelectedProject, ref _selectedProject, value);
+            set
+            {
+                Set(() => SelectedProject, ref _selectedProject, value);
+                RaisePropertyChanged("SelectedProjectText");
+            }
         }
         private IMagicProject _selectedProject;
 
@@ -47,6 +51,22 @@ namespace PackageMagic.WPF.ViewModel
             set => Set(() => Status, ref _status, value);
         }
         private string _status;
+
+        public string SelectedProjectText
+        {
+            get
+            {
+                if (SelectedProject != null)
+                {
+                    _selectedProjectText = $"Project: {SelectedProject.Name}, type: {SelectedProject.ProjectType}, framework: {SelectedProject.FrameworkVersion}";
+                }
+                else
+                    _selectedProjectText = $"";
+
+                return _selectedProjectText;
+            }
+        }
+        private string _selectedProjectText;
 
         //This property is keeping track if we are running a refresh for the moment, it toggles the Refresh button on and off
         public bool Busy

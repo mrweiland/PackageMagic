@@ -1,4 +1,5 @@
 ﻿using PackageMagic.General.Interface;
+using PackageMagic.PackageService.Type;
 using System.Collections.Generic;
 
 namespace PackageMagic.PackageService.Interface
@@ -14,6 +15,8 @@ namespace PackageMagic.PackageService.Interface
         //In that case we could start already at project level to read the xml into a stream
         //and then feed the Nuget class with that stream so it could continue to parse references
         string FrameworkVersion { get; set; }
+
+        ProjectType ProjectType { get; set; }
 
         List<IMagicPackage> Packages { get; set; }
     }

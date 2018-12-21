@@ -8,9 +8,12 @@
              d:DesignHeight="50" d:DesignWidth="800"
              DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
     
-    <Grid>
-        <StackPanel Orientation="Horizontal" Margin="4">
+    <StatusBar>
+        <StatusBarItem>
             <TextBlock Text="{Binding Status}" />
-        </StackPanel>
-    </Grid>
+        </StatusBarItem>
+        <StatusBarItem>
+                <TextBlock Text="{Binding SelectedProjectText}" />
+        </StatusBarItem>
+    </StatusBar>
 </UserControl>
