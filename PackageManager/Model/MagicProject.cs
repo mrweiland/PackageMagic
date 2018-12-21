@@ -22,6 +22,15 @@ namespace PackageMagic.PackageService.Model
             Packages.AddRange(parser.Packages);
         });
     }
+    public class MagicProjectNpm : MagicProjectBase
+    {
+        //Add anything special for this type of project
+        public async Task Parse() => await Task.Run(() =>
+        {
+            var parser = NpmProjParser.Parse(Path);
+            Packages.AddRange(parser.Packages);
+        });
+    }
 
     public class MagicProjectVb : MagicProjectBase
     {

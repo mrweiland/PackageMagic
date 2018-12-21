@@ -23,6 +23,17 @@ namespace PackageMagic.PackageService.Service
             List<IMagicProject> listProjects = new List<IMagicProject>();
 
             string[] projectFiles = Directory.GetFiles(pathToSearch, "*.csproj", SearchOption.AllDirectories);
+
+            string[] projectFilesNpm = Directory.GetFiles(pathToSearch, "package.json", SearchOption.AllDirectories);
+            foreach (var packageJson in projectFilesNpm)
+            {
+                Console.WriteLine(packageJson);
+                var project = new MagicProjectNpm { Name = Path.GetDirectoryName(packageJson), Path = packageJson };
+                await project.Parse();
+                IMagicPackageSearch theSearcher = new Npm();
+                project.Packages.AddRange(await theSearcher.SearchPackages(project.Path));
+                listProjects.Add(project);
+            }
             foreach (var csProjFile in projectFiles)
             {
                 MessageCallback?.Invoke($"Parsing {csProjFile}");
@@ -49,6 +60,7 @@ namespace PackageMagic.PackageService.Service
 
                 listProjects.Add(project);
             }
+
 
             return listProjects;
         }
