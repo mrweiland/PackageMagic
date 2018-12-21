@@ -1,8 +1,8 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using PackageMagic.General.Interface;
-using PackageMagic.PackageService.Interface;
-using PackageMagic.PackageService.Type;
+using PackageMagic.ProjectService.Interface;
+using PackageMagic.ProjectService.Type;
 using PackageMagic.WPF.Interface;
 using System;
 using System.Collections.Generic;

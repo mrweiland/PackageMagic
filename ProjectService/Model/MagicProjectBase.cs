@@ -1,15 +1,15 @@
 ﻿using PackageMagic.General.Interface;
-using PackageMagic.PackageService.Interface;
-using PackageMagic.PackageService.Model;
-using PackageMagic.PackageService.Service;
-using PackageMagic.PackageService.Type;
+using PackageMagic.ProjectService.Interface;
+using PackageMagic.ProjectService.Model;
+using PackageMagic.ProjectService.Service;
+using PackageMagic.ProjectService.Type;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PackageMagic.PackageService.Model
+namespace PackageMagic.ProjectService.Model
 {
     public abstract class MagicProjectBase : IMagicProject
     {

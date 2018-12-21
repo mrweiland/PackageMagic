@@ -9,7 +9,7 @@ using PackageMagic.General.Interface;
 using PackageMagic.General.Type;
 using PackagesNpm;
 
-namespace PackageMagic.PackageService.Model
+namespace PackageMagic.ProjectService.Model
 {
     public class MagicProjectNpm : MagicProjectBase
     {

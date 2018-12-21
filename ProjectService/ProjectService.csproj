@@ -7,8 +7,8 @@
     <ProjectGuid>{FFE9979E-F1F6-439D-A60D-2CD1826A0202}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PackageMagic.PackageService</RootNamespace>
-    <AssemblyName>PackageMagic.PackageService</AssemblyName>
+    <RootNamespace>PackageMagic.ProjectService</RootNamespace>
+    <AssemblyName>PackageMagic.ProjectService</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

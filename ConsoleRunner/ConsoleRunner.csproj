@@ -55,10 +55,6 @@
       <Project>{5b53af09-68d2-4618-a13e-5f052945adc5}</Project>
       <Name>PackagesNuget</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PackageManager\PackageService.csproj">
-      <Project>{ffe9979e-f1f6-439d-a60d-2cd1826a0202}</Project>
-      <Name>PackageService</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PackagesGeneral\PackagesGeneral.csproj">
       <Project>{4075CA79-5685-404D-AAC0-4562F007F712}</Project>
       <Name>PackagesGeneral</Name>
